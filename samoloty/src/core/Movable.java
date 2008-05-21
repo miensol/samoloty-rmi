@@ -9,7 +9,7 @@ package core;
  * @author Piotr
  * 
  */
-public abstract class Movable<T> extends StateElement<T> implements Moving<T> {
+public abstract class Movable<T> extends MapElement<T> implements Moving<T> {
 
 	protected T speedX;
 	protected T speedY;
@@ -25,14 +25,7 @@ public abstract class Movable<T> extends StateElement<T> implements Moving<T> {
 	 *            initial vertical speed
 	 */
 	public Movable(T px, T py, T pspeedX, T pspeedY) {
-		super(StateElement.State.Exists,px,py);
-		this.speedX = pspeedX;
-		this.speedY = pspeedY;
-	}
-	
-	public Movable(StateElement.State state,T px, T py, T pspeedX, T pspeedY) {
-		
-		super(state,px,py);
+		super(px,py);
 		this.speedX = pspeedX;
 		this.speedY = pspeedY;
 	}
