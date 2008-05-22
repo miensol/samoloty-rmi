@@ -13,6 +13,8 @@ public abstract class APlayer <T>{
 	protected String nick;
 	
 	protected T score;
+	
+	protected String url;
 
 	public String getNick() {
 		return nick;
