@@ -1,12 +1,14 @@
 package core;
 
+import java.rmi.Remote;
+
 /***
  * Interface template of movable object in game
  * @author Piotr
  * 
  * @param <T> type of coordinates and speed
  */
-public interface Moving <T> {
+public interface Moving <T> extends Remote{
 	T getX();
 	T getY();
 	void setX(T x);

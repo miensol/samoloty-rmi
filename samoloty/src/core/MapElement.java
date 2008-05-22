@@ -3,18 +3,20 @@
  */
 package core;
 
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
 /**
  * Represents an object having coordinates
  * 
  * @author Piotr
  * 
  */
-public abstract class MapElement<T> {
+public abstract class MapElement<T> extends UnicastRemoteObject{
 	
 	protected T x;
 	protected T y;
 
-	public MapElement(T x, T y) {
+	public MapElement(T x, T y) throws RemoteException {
 	
 		this.x = x;
 		this.y = y;

@@ -4,6 +4,8 @@
 package common;
 
 
+import java.rmi.RemoteException;
+
 import core.Flying;
 import core.Movable;
 
@@ -34,7 +36,7 @@ public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
 	 */
 	protected String pilotName;
 	
-	public BasePlane(String player){
+	public BasePlane(String player) throws RemoteException{
 		// should be changed when BasePlane constructor gets parameters
 		super((short)0,(short)0,(short)0,(short)0);	
 		this.pilotName = player;

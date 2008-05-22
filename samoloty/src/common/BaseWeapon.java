@@ -1,7 +1,7 @@
 package common;
 
 import core.Movable;
-
+import java.rmi.RemoteException;
 
 public class BaseWeapon extends Movable<Short>  {
 	
@@ -17,7 +17,7 @@ public class BaseWeapon extends Movable<Short>  {
 	}; 
 	protected State state;
 	
-	public BaseWeapon(BasePlane p){
+	public BaseWeapon(BasePlane p) throws RemoteException{
 		super(p.getX(), p.getY(), p.getSpeedX(), p.getSpeedY());
 		this.shooterNick = p.getPilotName();
 	}

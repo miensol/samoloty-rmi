@@ -30,6 +30,8 @@ public interface Gaming extends Remote {
 	 */
 	Gaming getGame(String url)
 		throws RemoteException;
-	void start();
-	void stop();
+	void start()
+		throws RemoteException;
+	void stop()
+		throws RemoteException;
 }

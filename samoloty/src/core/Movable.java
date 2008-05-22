@@ -2,7 +2,7 @@
  * 
  */
 package core;
-
+import java.rmi.RemoteException;
 /**
  * Represents an abstract class of movable objects in a game
  * 
@@ -24,7 +24,7 @@ public abstract class Movable<T> extends MapElement<T> implements Moving<T> {
 	 * @param pspeedY
 	 *            initial vertical speed
 	 */
-	public Movable(T px, T py, T pspeedX, T pspeedY) {
+	public Movable(T px, T py, T pspeedX, T pspeedY) throws RemoteException{
 		super(px,py);
 		this.speedX = pspeedX;
 		this.speedY = pspeedY;
