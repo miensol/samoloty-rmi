@@ -14,7 +14,7 @@ import core.Movable;
  * @author Piotr
  *
  */
-public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
+public class BasePlane extends Movable <Short> implements Piloting{
 	/**
 	 * Maximal speed of a plane
 	 */
@@ -47,7 +47,8 @@ public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
 	 * @see core.Moving#move()
 	 */
 	@Override
-	public void move() {
+	public void move() throws RemoteException {
+		System.out.println("Player "+ this.pilotName + " moved");
 		this.x+=this.speedX;
 		this.y+=this.speedY;
 	}
@@ -55,26 +56,26 @@ public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
 	/**
 	 * @return the angle
 	 */
-	public Float getAngle() {
+	public Float getAngle() throws RemoteException {
 		return angle;
 	}
 
 	/**
 	 * @param angle the angle of a plane to set
 	 */
-	public void setAngle(Float angle) {
+	public void setAngle(Float angle) throws RemoteException {
 		this.angle = angle;
 	}
 
 	/**
 	 * @return the maximal plane speed
 	 */
-	public static short getMaxSpeed() {
+	public static short getMaxSpeed()  throws RemoteException{
 		return maxSpeed;
 	}
 	
 	@Override
-	public void turnLeft(Float angle) {
+	public void turnLeft(Float angle)  throws RemoteException{
 		this.angle+=angle;
 		// sets angle between 0 and 2PI
 		if( this.angle > 2*Math.PI )
@@ -82,7 +83,7 @@ public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
 	}
 	
 	@Override
-	public void turnRight(Float angle) {
+	public void turnRight(Float angle)  throws RemoteException{
 		this.angle-=angle;
 		// sets angle between 0 and 2PI		
 		if( this.angle < 0 )
@@ -93,7 +94,7 @@ public class BasePlane extends Movable <Short> implements Flying<Float, Short>{
 	/**
 	 * @return pilot's/player's nick name 
 	 */
-	public String getPilotName() {
+	public String getPilotName()  throws RemoteException{
 		return pilotName;
 	}
 

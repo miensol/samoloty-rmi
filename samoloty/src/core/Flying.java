@@ -3,6 +3,8 @@
  */
 package core;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * Template of an interface of flying objects
@@ -11,9 +13,13 @@ package core;
  * @author Piotr
  *
  */
-public interface Flying <U,T> extends Moving<T>{
-	void setAngle(U angle);
-	U getAngle();
-	void turnLeft(U angle);
-	void turnRight(U angle);
+public interface Flying <U,T> extends Moving<T>,Remote{
+	void setAngle(U angle)
+		throws RemoteException;
+	U getAngle()
+		throws RemoteException;;
+	void turnLeft(U angle)
+		throws RemoteException;
+	void turnRight(U angle)
+		throws RemoteException;
 }

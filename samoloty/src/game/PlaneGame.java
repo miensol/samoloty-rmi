@@ -97,8 +97,14 @@ public class PlaneGame extends Game implements Gaming{
 	public Player join(String nick) throws RemoteException {
 		if( nick == null || this.players.containsKey(nick))
 			throw new RemoteException("Player with nick " + nick + " already exists");
+		
+		Player newPlayer = new Player(nick,this);
+		
+		this.registry.rebind(nick, newPlayer );
+		// as for now adding plane is here, I guess it should be placed in Player constructor
+		this.registry.rebind(nick + "/plane", newPlayer.getPlane());
 		System.out.println("Player " + nick + " joined the game!");
-		return this.players.put(nick, new Player(nick));
+		return this.players.put(nick, newPlayer);
 	}
 	
 	@Override

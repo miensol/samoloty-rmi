@@ -22,19 +22,19 @@ public abstract class MapElement<T> extends UnicastRemoteObject{
 		this.y = y;
 	}
 
-	public T getX() {
+	public T getX() throws RemoteException{
 		return x;
 	}
 
-	public void setX(T x) {
+	public void setX(T x)  throws RemoteException{
 		this.x = x;
 	}
 
-	public T getY() {
+	public T getY()  throws RemoteException{
 		return y;
 	}
 
-	public void setY(T y) {
+	public void setY(T y)  throws RemoteException{
 		this.y = y;
 	}
 

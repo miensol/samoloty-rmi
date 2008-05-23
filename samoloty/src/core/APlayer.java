@@ -22,19 +22,19 @@ public abstract class APlayer <T> extends UnicastRemoteObject{
 	public APlayer(String nick) throws RemoteException {
 		this.nick = nick;
 	}
-	public String getNick() {
+	public String getNick() throws RemoteException {
 		return nick;
 	}
 
-	public void setNick(String nick) {
+	public void setNick(String nick)throws RemoteException {
 		this.nick = nick;
 	}
 
-	public T getScore() {
+	public T getScore() throws RemoteException{
 		return score;
 	}
 
-	public void setScore(T score) {
+	public void setScore(T score) throws RemoteException{
 		this.score = score;
 	}
 	

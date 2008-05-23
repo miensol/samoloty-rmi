@@ -1,5 +1,7 @@
 package common;
 
+import game.PlaneGame;
+
 import java.rmi.RemoteException;
 
 import core.APlayer;
@@ -7,10 +9,11 @@ import core.APlayer;
 public class Player extends APlayer<Integer> implements Playing {
 
 	protected BasePlane plane;
-	
-	public Player(String nick) throws RemoteException{
+	protected PlaneGame game;
+	public Player(String nick, PlaneGame game) throws RemoteException{
 		super(nick);
 		this.plane = new BasePlane(nick);
+
 	}
 
 	public BasePlane getPlane() throws RemoteException{
@@ -21,10 +24,14 @@ public class Player extends APlayer<Integer> implements Playing {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
-		if( obj instanceof Player)
-			return ((Player)obj).getNick() == this.getNick();
+		try{
+			if( obj instanceof Player)
+				return ((Player)obj).getNick() == this.getNick();
+		}catch(Exception e){
+			System.err.println("Error! "+ e.getMessage());
+		} 
 		
 		return super.equals(obj);
+		
 	}
 }
