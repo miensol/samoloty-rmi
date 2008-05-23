@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 
 /**
  * Represents methods that can be called locally and remotely 
- * that class Game should implement
+ * 
  * @author Piotr
  *
  */
@@ -16,11 +16,20 @@ public interface Gaming extends Remote {
 	/**
 	 * 
 	 * @param nick players name
-	 * @return as for now its Player, should be changed to interface Playing
-	 * @throws RemoteException when player with nick can't be found
+	 * @return as for now its Player, should be changed to interface Playing/Player
+	 * @throws RemoteException 
 	 */
 	Player getPlayer(String nick)
 		throws RemoteException;
+	Player getPlayer(Player nick)
+		throws RemoteException;
+	Player removePlayer(Player player) 
+		throws RemoteException;
+	Player removePlayer(String nick) 
+		throws RemoteException;
+	Player join(String nick)
+		throws RemoteException;
+
 	/**
 	 * Finds Game object in a remote location specified in url
 	 * Should be implemented as static method of a Game

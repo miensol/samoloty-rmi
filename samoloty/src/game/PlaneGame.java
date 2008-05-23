@@ -4,6 +4,10 @@
 package game;
 
 import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import common.Gaming;
 import common.Player;
@@ -16,16 +20,21 @@ public class PlaneGame extends Game implements Gaming{
 	/**
 	 * Contains an interface to this games
 	 */
-	
+	protected Map<String, Player> players;
 	protected String url; 
 	protected String name = "PlaneGame";
 	public PlaneGame(String nick) throws RemoteException{
+		
 		super(nick);
 		
 		this.url = Game.URL_BASE + "/PlaneGame";
 		
-		// should place try catch here ?
-		this.registry.rebind(this.name, this);	
+		// should it be placed in Game ?
+		this.registry.rebind(this.name, this);
+		
+		// map with game players
+		this.players = Collections.synchronizedMap(new HashMap<String,Player>());
+		
 	
 	}
 	
@@ -46,12 +55,52 @@ public class PlaneGame extends Game implements Gaming{
 		// TODO Auto-generated method stub
 		return this;
 	}
-	
+	/**
+	 * Returns Player if player with nick exists
+	 * otherwise null
+	 */
 	@Override
 	public Player getPlayer(String nick) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.players.get(nick);
 	}
+	/**
+	 * If possible use @see {@link PlaneGame} getPlayer(String nick)
+	 * @param player 
+	 * @return Player if found
+	 * @throws RemoteException
+	 */
+	public Player getPlayer(Player player) throws RemoteException{
+		return this.players.get(player);
+	}
+	/**
+	 * Removes player from game
+	 * @param player to remove
+	 * @return removed player or null if such didn't exist
+	 * @throws RemoteException
+	 */
+	public Player removePlayer(Player player) throws RemoteException{
+		System.out.println("Player "+ player.getNick() + " quited the game!");
+		return this.players.remove(player.getNick());
+	}
+	/**
+	 * Removes player from game
+	 * @param nick of player to remove from game
+	 * @return removed player or null if such didn't exist
+	 * @throws RemoteException
+	 */
+	public Player removePlayer(String nick) throws RemoteException{
+		System.out.println("Player "+ nick + " quited the game!");
+		return this.players.remove(nick);
+	}
+	
+	@Override
+	public Player join(String nick) throws RemoteException {
+		if( nick == null || this.players.containsKey(nick))
+			throw new RemoteException("Player with nick " + nick + " already exists");
+		System.out.println("Player " + nick + " joined the game!");
+		return this.players.put(nick, new Player(nick));
+	}
+	
 	@Override
 	public String toString() {
 		return "PlaneGame adress: " + this.url + " Owner: " +this.nick;	

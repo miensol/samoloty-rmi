@@ -37,4 +37,5 @@ public abstract class APlayer <T> extends UnicastRemoteObject{
 	public void setScore(T score) {
 		this.score = score;
 	}
+	
 }
