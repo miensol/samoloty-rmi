@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="net.genady.rmi.rmiServer">
+<stringAttribute key="net.genady.rmi.afterCommand" value=""/>
+<stringAttribute key="net.genady.rmi.beforeCommand" value=""/>
+<booleanAttribute key="net.genady.rmi.beforeWaitCompletion" value="false"/>
+<booleanAttribute key="net.genady.rmi.launchInspectLater" value="false"/>
+<mapAttribute key="net.genady.rmi.launchProp">
+<mapEntry key="java.security.policy" value="${workspace_loc:/samoloty/security.policy}"/>
+</mapAttribute>
+<listAttribute key="net.genady.rmi.launchProp.codebase">
+<listEntry value="file:${workspace_loc:/samoloty/bin}"/>
+<listEntry value="file:E:\Program Files\eclipse\plugins\org.eclipse.swt.win32.win32.x86_3.3.2.v3347a.jar"/>
+</listAttribute>
+<intAttribute key="net.genady.rmi.launchRegistryAction" value="0"/>
+<stringAttribute key="net.genady.rmi.launchRegistryPort" value="10002"/>
+<booleanAttribute key="net.genady.rmi.logRMIEvents" value="false"/>
+<booleanAttribute key="net.genady.rmi.logRMIEvents.noSerialization" value="false"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/samoloty/src/player/Test.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="player.Test"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="samoloty"/>
+</launchConfiguration>
