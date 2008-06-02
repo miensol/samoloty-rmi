@@ -1,11 +1,17 @@
 package gui;
 
+import game.Game;
+
+import java.rmi.Naming;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
+
+import common.Gaming;
 
 
 public class Plain {
@@ -56,6 +62,7 @@ public class Plain {
 	
 	//reakcja na klawisze i k j l
 	public Listener player2(final Canvas canvas){
+		
 		Listener listener = new Listener() {
 			public void handleEvent(Event e) {
 				
@@ -87,23 +94,34 @@ public class Plain {
 	}
 	 
 	public void run() {
-		setDisplay(new Display());
+		setDisplay(Display.getDefault());
+		
 		final Shell shell = new Shell(display);
-		shell.setText("Samolocik");
+		/*
 		final Canvas plain = createPlain(shell);
+		
 		final Canvas plain2 = createPlain(shell);		
 		plain.setBackground(display.getSystemColor(SWT.COLOR_BLUE));
 	
 		Listener wsad = player1(plain);
 		Listener ikjl = player2(plain2);
 		
-		shell.addListener(SWT.KeyDown, wsad);
+		shell.addListener(SWT.KeyDown, player1(plain));
 		shell.addListener(SWT.KeyUp, wsad);
 		shell.addListener(SWT.KeyDown, ikjl);
 		shell.addListener(SWT.KeyUp, ikjl);
+		*/
+		try{
+			Gaming gra = (Gaming)Naming.lookup(Game.URL_BASE+"/PlaneGame");
+			gra.join("Tomek");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	
+		Canvas plain = new PlaneImage(shell,"img/samolocik.jpg","Tomek");
 		
-		shell.setSize(500, 500);
-
+		shell.setSize(800, 610);
+		
 		shell.setText("Zajebiste samoloty");
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -115,7 +133,7 @@ public class Plain {
 
 	//wyswietlenie samolotu
 	public Canvas createPlain(Shell shell) {
-	
+		
 		Canvas canvas = new Canvas(shell, SWT.NULL);
 		canvas.setSize(48, 47);
 		canvas.addPaintListener(new PaintListener() {

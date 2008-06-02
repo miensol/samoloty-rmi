@@ -8,16 +8,19 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import common.BasePlane;
 import common.Gaming;
 import common.Player;
+import common.Playing;
 
 /**
  * @author Piotr
  * 
  */
-public class PlaneGame extends Game implements Gaming {
+public class PlaneGame extends Game implements Gaming{
 	/**
 	 * Contains an interface to this games
 	 */
@@ -140,5 +143,14 @@ public class PlaneGame extends Game implements Gaming {
 	@Override
 	public String toString() {
 		return "PlaneGame adress: " + this.url + " Owner: " + this.nick;
+	}
+	
+	public void moveAll() throws RemoteException{
+		Player gracz = this.getPlayer("Tomek");
+		if(gracz !=null){
+			BasePlane plane = gracz.getPlane();
+			Integer x =  (plane.getX()+10)%800;
+			plane.setX(x.shortValue());
+		}
 	}
 }
