@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -29,7 +30,7 @@ public class DialogAbout extends org.eclipse.swt.widgets.Dialog {
 
 	private Shell dialogShell;
 	private Button buttonAboutOk;
-	private Text textAbout;
+	private StyledText styledText1;
 
 	/**
 	* Auto-generated main method to display this 
@@ -58,17 +59,25 @@ public class DialogAbout extends org.eclipse.swt.widgets.Dialog {
 			dialogShell.setLayout(new FormLayout());
 			dialogShell.setText("About...");
 			{
-				textAbout = new Text(dialogShell, SWT.NONE);
-				textAbout.setText("Authors: Piotr Mionskowski, Tomasz Kwiecien");
-				FormData textAboutLData = new FormData();
-				textAboutLData.width = 406;
-				textAboutLData.height = 208;
-				textAboutLData.left =  new FormAttachment(0, 1000, 31);
-				textAboutLData.top =  new FormAttachment(0, 1000, 12);
-				textAbout.setLayoutData(textAboutLData);
+				styledText1 = new StyledText(dialogShell, SWT.NONE);
+				FormData styledText1LData = new FormData();
+				styledText1LData.width = 451;
+				styledText1LData.height = 205;
+				styledText1LData.left =  new FormAttachment(0, 1000, 12);
+				styledText1LData.top =  new FormAttachment(0, 1000, 12);
+				styledText1.setLayoutData(styledText1LData);
+				styledText1.setText(" \n Authors: Piotr Mionskowski, Tomasz Kwiecien \n \n Game discription:");
 			}
 			{
 				buttonAboutOk = new Button(dialogShell, SWT.PUSH | SWT.CENTER);
+				FormData buttonAboutOkLData1 = new FormData();
+				buttonAboutOkLData1.width = 105;
+				buttonAboutOkLData1.height = 27;
+				buttonAboutOkLData1.left =  new FormAttachment(764, 1000, 0);
+				buttonAboutOkLData1.right =  new FormAttachment(988, 1000, 0);
+				buttonAboutOkLData1.top =  new FormAttachment(860, 1000, 0);
+				buttonAboutOkLData1.bottom =  new FormAttachment(960, 1000, 0);
+				buttonAboutOk.setLayoutData(buttonAboutOkLData1);
 				buttonAboutOk.setText("OK");
 				buttonAboutOk.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent evt) {
@@ -84,8 +93,8 @@ public class DialogAbout extends org.eclipse.swt.widgets.Dialog {
 			}
 			dialogShell.layout();
 			dialogShell.pack();			
-			dialogShell.setSize(483, 312);
-			
+			dialogShell.setSize(477, 295);
+
 			dialogShell.setLocation(getParent().toDisplay(100, 100));
 			dialogShell.open();
 			Display display = dialogShell.getDisplay();

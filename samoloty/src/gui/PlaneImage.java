@@ -60,8 +60,9 @@ public class PlaneImage extends Canvas implements PaintListener{
 		}
 	}
 	
-	public void imageRotate(PaintEvent pEvent,int angle) {
+	public void imageRotate(PaintEvent pEvent,int angle){
 		//check java abilities
+		
 		pEvent.gc.setAdvanced(true);
 		if (!pEvent.gc.getAdvanced()){
 			pEvent.gc.drawText("Advanced graphics not supported", 30, 30, true);

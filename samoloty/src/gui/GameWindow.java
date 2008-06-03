@@ -55,8 +55,8 @@ public class GameWindow extends org.eclipse.swt.widgets.Dialog {
 
 			FormLayout dialogGameShellLayout = new FormLayout();
 			dialogGameShell.setLayout(dialogGameShellLayout);
-			dialogGameShellLayout.marginTop = 40;
-			dialogGameShellLayout.marginLeft = 40;
+			dialogGameShellLayout.marginTop = 5;
+			dialogGameShellLayout.marginLeft = 5;
 			dialogGameShell.setText("Planes Game");
 			{
 				menuMain = new Menu(dialogGameShell, SWT.BAR);

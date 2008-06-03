@@ -63,7 +63,7 @@ public class DialogConnect extends org.eclipse.swt.widgets.Dialog {
 			dialogConnectShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 
 			dialogConnectShell.setLayout(new FormLayout());
-			dialogConnectShell.setText("Connect to .....");
+			dialogConnectShell.setText("Connect to ...");
 			{
 				labelServer = new Label(dialogConnectShell, SWT.NONE);
 				labelServer.setText("Server name");
