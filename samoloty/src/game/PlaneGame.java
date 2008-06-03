@@ -125,7 +125,7 @@ public class PlaneGame extends Game implements Gaming{
 	}
 
 	@Override
-	public Player join(String nick) throws RemoteException {
+	public Playing join(String nick) throws RemoteException {
 		if (nick == null || this.players.containsKey(nick))
 			throw new RemoteException("Player with nick " + nick
 					+ " already exists");

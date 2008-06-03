@@ -21,15 +21,15 @@ public interface Gaming extends Remote {
 	 *         Playing/Player
 	 * @throws RemoteException
 	 */
-	Player getPlayer(String nick) throws RemoteException;
+	Playing getPlayer(String nick) throws RemoteException;
 
-	Player getPlayer(Player nick) throws RemoteException;
+	Playing getPlayer(Player nick) throws RemoteException;
 
-	Player removePlayer(Player player) throws RemoteException;
+	Playing removePlayer(Player player) throws RemoteException;
 
-	Player removePlayer(String nick) throws RemoteException;
+	Playing removePlayer(String nick) throws RemoteException;
 
-	Player join(String nick) throws RemoteException;
+	Playing join(String nick) throws RemoteException;
 
 	/**
 	 * Finds Game object in a remote location specified in url Should be
