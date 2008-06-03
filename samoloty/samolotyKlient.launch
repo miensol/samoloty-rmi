@@ -16,12 +16,12 @@
 <booleanAttribute key="net.genady.rmi.logRMIEvents" value="false"/>
 <booleanAttribute key="net.genady.rmi.logRMIEvents.noSerialization" value="false"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/samoloty/src/player/Test.java"/>
+<listEntry value="/samoloty/src/gui/Plain.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="player.Test"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gui.Plain"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="samoloty"/>
 </launchConfiguration>

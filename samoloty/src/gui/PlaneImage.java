@@ -66,8 +66,8 @@ public class PlaneImage extends Canvas implements PaintListener{
 				System.out.println(s);
 			System.out.println("A szukam : " + Game.URL_BASE+"/"+this.nick);*/
 			this.player = (Playing)Naming.lookup(Game.URL_BASE+"/"+this.nick);
-			Piloting plane = (Piloting)Naming.lookup(Game.URL_BASE+"/"+this.nick+"/plane");
-			return plane;
+			
+			return this.player.getPlane();
 			
 		}catch(Exception e){
 			e.printStackTrace();

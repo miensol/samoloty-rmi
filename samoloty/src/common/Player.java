@@ -21,7 +21,7 @@ public class Player extends APlayer<Integer> implements Playing {
 
 	}
 
-	public BasePlane getPlane() throws RemoteException {
+	public Piloting getPlane() throws RemoteException {
 		return this.plane;
 	}
 

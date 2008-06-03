@@ -20,6 +20,6 @@ public interface Playing extends Remote {
 	// this method isn't pretty written here
 	Integer getScore() throws RemoteException;
 
-	BasePlane getPlane() throws RemoteException;
+	Piloting getPlane() throws RemoteException;
 
 }

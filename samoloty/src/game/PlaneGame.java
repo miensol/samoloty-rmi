@@ -13,6 +13,7 @@ import java.util.Map;
 
 import common.BasePlane;
 import common.Gaming;
+import common.Piloting;
 import common.Player;
 import common.Playing;
 
@@ -148,7 +149,7 @@ public class PlaneGame extends Game implements Gaming{
 	public void moveAll() throws RemoteException{
 		Player gracz = this.getPlayer("Tomek");
 		if(gracz !=null){
-			BasePlane plane = gracz.getPlane();
+			Piloting plane = gracz.getPlane();
 			Integer x =  (plane.getX()+10)%800;
 			plane.setX(x.shortValue());
 		}
