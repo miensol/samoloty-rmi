@@ -118,7 +118,7 @@ public class Plain {
 			e.printStackTrace();
 		}
 	
-		Canvas plain = new PlaneImage(shell,"img/samolocik.jpg","Tomek");
+		Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
 		
 		shell.setSize(800, 610);
 		

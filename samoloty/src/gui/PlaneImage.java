@@ -30,10 +30,10 @@ public class PlaneImage extends Canvas implements PaintListener{
 	PlaneImage(Composite composite, String path, String nick){
 		super(composite,SWT.NULL);
 		this.image = new Image(Plain.display,PlaneImage.class.getResourceAsStream(path));
-		//this.imageData = this.image.getImageData();
-		//this.height = this.imageData.height;
-		//this.width = this.imageData.width;
-		this.setSize(48, 47);
+		this.imageData = this.image.getImageData();
+		this.height = this.imageData.height;
+		this.width = this.imageData.width;
+		this.setSize(this.width,this.height);
 		this.nick = nick;
 		this.plane = this.getPlane();
 		
