@@ -10,6 +10,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -33,7 +34,7 @@ public class PlaneImage extends Canvas implements PaintListener{
 		this.imageData = this.image.getImageData();
 		this.height = this.imageData.height;
 		this.width = this.imageData.width;
-		this.setSize(this.width,this.height);
+		this.setSize(this.width+10,this.height+10);
 		this.nick = nick;
 		this.plane = this.getPlane();
 		
@@ -46,7 +47,7 @@ public class PlaneImage extends Canvas implements PaintListener{
 	@Override
 	public void paintControl(PaintEvent pEvent) {
 		System.out.print("wszedlem");
-		// TODO Auto-generated method stub	
+		imageRotate(pEvent, 2);
 		pEvent.gc.drawImage(this.image, 0, 0);
 		try{
 			this.setLocation(this.plane.getX(), this.plane.getY());
@@ -58,6 +59,20 @@ public class PlaneImage extends Canvas implements PaintListener{
 			System.err.println("Wystapil blad!");
 		}
 	}
+	
+	public void imageRotate(PaintEvent pEvent,int angle) {
+		//check java abilities
+		pEvent.gc.setAdvanced(true);
+		if (!pEvent.gc.getAdvanced()){
+			pEvent.gc.drawText("Advanced graphics not supported", 30, 30, true);
+			return;
+		}
+		Transform transform = new Transform(Display.getCurrent());
+		transform.rotate(angle);
+		pEvent.gc.setTransform(transform);
+		transform.dispose();
+	}
+	
 	
 	public Piloting getPlane(){
 		
