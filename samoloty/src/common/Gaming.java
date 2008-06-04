@@ -33,10 +33,10 @@ public interface Gaming extends Remote, Iterable<Map.Entry<String, Playing>> {
 	Playing join(String nick) throws RemoteException;
 
 	/**
-	 * Finds Game object in a remote location specified in url Should be
+	 * Finds Game object in a remote location specified in gameUrl Should be
 	 * implemented as static method of a Game
 	 * 
-	 * @param url
+	 * @param gameUrl
 	 *            full address of a Game server
 	 * @return Gaming interface
 	 * @throws RemoteException
