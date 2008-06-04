@@ -10,8 +10,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import common.BasePlane;
+
 import common.Gaming;
 import common.Piloting;
 import common.Player;
@@ -21,14 +22,16 @@ import common.Playing;
  * @author Piotr
  * 
  */
-public class PlaneGame extends Game implements Gaming{
+public class PlaneGame extends Game implements Gaming,
+		Iterable<Map.Entry<String, Player>>,
+		Runnable {
 	/**
 	 * Contains an interface to this games
 	 */
 	protected Map<String, Player> players;
 	protected String url;
 	protected String name = "PlaneGame";
-
+	protected Thread actinos;
 	public PlaneGame(String nick) throws RemoteException {
 
 		super(nick);
@@ -41,13 +44,23 @@ public class PlaneGame extends Game implements Gaming{
 		// map with game players
 		this.players = Collections
 				.synchronizedMap(new HashMap<String, Player>());
-
+		
+		this.actinos = new Thread(this);
+		
+		
 	}
 
 	@Override
+	public Iterator<Entry<String, Player>> iterator() {
+		return this.players.entrySet().iterator();
+	}
+	
+	@Override
 	public void start() throws RemoteException {
 		// TODO Auto-generated method stub
+		this.actinos.start();
 		System.out.println("Game started");
+		
 	}
 
 	@Override
@@ -145,13 +158,31 @@ public class PlaneGame extends Game implements Gaming{
 	public String toString() {
 		return "PlaneGame adress: " + this.url + " Owner: " + this.nick;
 	}
-	
-	public void moveAll() throws RemoteException{
-		Player gracz = this.getPlayer("Tomek");
-		if(gracz !=null){
-			Piloting plane = gracz.getPlane();
-			Integer x =  (plane.getX()+10)%800;
-			plane.setX(x.shortValue());
+
+	public void moveAll() throws RemoteException {
+		System.out.println("Jestem w moveAll!");
+		for(Map.Entry<String, Player> k : this ){
+			System.out.println("Ruszam gracza : " + k.getKey());
+			Piloting plane = k.getValue().getPlane();
+			plane.move();
 		}
+	}
+	@Override
+	public void run() {
+		try{
+			
+			do{
+				Thread.sleep(500);
+				this.moveAll();
+			}while(true);
+			
+		}catch(InterruptedException e){
+			System.out.println("Watek actions w Grze zostal zatrzymany!");
+		}catch( RemoteException e){
+			System.err.println("Dziwaczny blad nie powinien sie pojawic");
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

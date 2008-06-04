@@ -24,4 +24,8 @@ public interface Flying<U, T> extends Moving<T>, Remote {
 	void turnLeft(U angle) throws RemoteException;
 
 	void turnRight(U angle) throws RemoteException;
+	
+	void turnLeft() throws RemoteException;
+	
+	void turnRight() throws RemoteException;
 }

@@ -3,6 +3,8 @@
  */
 package common;
 
+import gui.Board;
+
 import java.rmi.RemoteException;
 
 import core.Movable;
@@ -51,6 +53,20 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		System.out.println("Player " + this.pilotName + " moved");
 		this.x += this.speedX;
 		this.y += this.speedY;
+		checkCoordinates();
+	}
+	/**
+	 * checks coordinates after moving
+	 */
+	private void checkCoordinates(){
+		if( this.x < 0 )
+			this.x = 0;
+		if( this.y < 0 )
+			this.y = 0;
+		if( this.x > Board.width )
+			this.x = Board.width;
+		if ( this.y > Board.height )
+			this.y = Board.height;
 	}
 
 	/**
@@ -81,6 +97,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		// sets angle between 0 and 2PI
 		if (this.angle > 2 * Math.PI)
 			this.angle -= 2 * Math.PI;
+		normalizeSpeed();
 	}
 
 	@Override
@@ -89,7 +106,35 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		// sets angle between 0 and 2PI
 		if (this.angle < 0)
 			this.angle += 2 * Math.PI;
+		normalizeSpeed();
+	}
 
+	@Override
+	/**
+	 * Turns left 90 degrees
+	 */
+	public void turnLeft() throws RemoteException {
+		this.turnLeft((float) Math.PI * 0.25F);
+	}
+
+	/**
+	 * Turn right 90 degrees
+	 */
+	@Override
+	public void turnRight() throws RemoteException {
+		this.turnRight((float) Math.PI * 0.25F);
+	}
+
+	/**
+	 * Changes speedX and speedY after changing the angle
+	 */
+	private void normalizeSpeed() {
+		double speed = Math.sqrt(this.speedX * this.speedX + this.speedY
+				* this.speedY);
+		Integer spx = Math.round((float) speed * (float) Math.cos(this.angle));
+		Integer spy = Math.round((float) speed * (float) Math.sin(this.angle));
+		this.speedX = spx.shortValue();
+		this.speedY = spy.shortValue();
 	}
 
 	/**

@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 public class Board extends Canvas  {
-	public static final int width= 800;
+	public static final int width= 600;
 	public static final int height = 800;
 	Board(Composite composite){
 		super(composite,SWT.NULL);

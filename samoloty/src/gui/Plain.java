@@ -110,14 +110,20 @@ public class Plain {
 		shell.addListener(SWT.KeyDown, ikjl);
 		shell.addListener(SWT.KeyUp, ikjl);
 		*/
+		Gaming gra;
 		try{
-			Gaming gra = (Gaming)Naming.lookup(Game.URL_BASE+"/PlaneGame");
+			gra = (Gaming)Naming.lookup(Game.URL_BASE+"/PlaneGame");
 			gra.join("Tomek");
+			gra.join("Piotr");
+			gra.start();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	
 		Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
+		Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
+		plain.setLocation(100, 100);
+		plain2.setLocation(100, 400);
 		
 		shell.setSize(800, 610);
 		
@@ -127,6 +133,7 @@ public class Plain {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
+		
 		display.dispose();
 	}
 

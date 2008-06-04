@@ -40,14 +40,19 @@ public class PlaneImage extends Canvas implements PaintListener{
 		
 		// beautiful ;d;d;d;d
 		this.addPaintListener(this);
-		
+		try{
+			short x = 10;
+			plane.setSpeedX(x);
+		}catch(Exception e){
+			
+		}
 		
 	}
 	
 	@Override
 	public void paintControl(PaintEvent pEvent) {
 		System.out.print("wszedlem");
-		imageRotate(pEvent, 2);
+		//imageRotate(pEvent, 2);
 		pEvent.gc.drawImage(this.image, 0, 0);
 		try{
 			this.setLocation(this.plane.getX(), this.plane.getY());
@@ -59,7 +64,17 @@ public class PlaneImage extends Canvas implements PaintListener{
 			System.err.println("Wystapil blad!");
 		}
 	}
-	
+	@Override
+	public void setLocation(int x, int y) {
+		try{
+			this.plane.setX(((Integer)x).shortValue());
+			this.plane.setY(((Integer)y).shortValue());
+		}catch(RemoteException e){
+			System.out.println("Nie moge ruszyc gracza przez PlaneImage");
+			e.printStackTrace(System.out);
+		}
+		super.setLocation(x, y);
+	}
 	public void imageRotate(PaintEvent pEvent,int angle){
 		//check java abilities
 		
