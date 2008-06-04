@@ -54,6 +54,7 @@ public class PlaneGame extends Game implements Gaming,
 		return this.players.entrySet().iterator();
 	}
 	
+
 	@Override
 	public void start() throws RemoteException {
 		// TODO Auto-generated method stub

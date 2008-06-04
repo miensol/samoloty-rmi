@@ -5,6 +5,7 @@ package common;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author Piotr
  * 
  */
-public interface Gaming extends Remote, Iterable<Map.Entry<String, Playing>> {
+public interface Gaming extends Remote {
 	/**
 	 * 
 	 * @param nick
@@ -46,4 +47,7 @@ public interface Gaming extends Remote, Iterable<Map.Entry<String, Playing>> {
 	void start() throws RemoteException;
 
 	void stop() throws RemoteException;
+	/*
+	Playing next() throws RemoteException;
+	boolean hasNext() throws RemoteException;*/
 }
