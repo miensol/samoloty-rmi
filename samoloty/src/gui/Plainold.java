@@ -7,6 +7,8 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
 
+import com.cloudgarden.resource.SWTResourceManager;
+
 
 public class Plainold {
 
@@ -61,7 +63,7 @@ public class Plainold {
 	}
 	
 	//reakcja na klawisze i k j l
-	public Listener player2(final Canvas canvas){
+	public Listener player2(final Canvas canvas2){
 		Listener listener = new Listener() {
 			public void handleEvent(Event e) {
 				
@@ -84,7 +86,7 @@ public class Plainold {
 				}
 				}
 				System.out.print(X2 + " " +Y2 + "\n");
-				canvas.dispose();
+				canvas2.redraw();
 			}
 		};
 		
@@ -97,13 +99,17 @@ public class Plainold {
 		final Shell shell = new Shell(display);
 		shell.setText("Samolocik");
 		final Canvas plain = createPlain(shell,0);	
-	
+		final Canvas plain2 = createPlain(shell,0);	
+		plain.setLocation(100, 100);
+		plain2.setLocation(200, 200);
 		Listener wsad = player1(plain);
-		
+		Listener ikjl = player2(plain2);
 		shell.addListener(SWT.KeyDown, wsad);
 		shell.addListener(SWT.KeyUp, wsad);
+		shell.addListener(SWT.KeyDown, ikjl);
+		shell.addListener(SWT.KeyUp, ikjl);
 		
-		shell.setSize(500, 500);
+		shell.setSize(600, 600);
 
 		shell.setText("Zajebiste samoloty");
 		shell.open();
@@ -119,8 +125,8 @@ public class Plainold {
 	
 		Canvas canvas = new Canvas(shell, SWT.NULL);
 		canvas.setSize(200, 200);
+		canvas.setBackground(SWTResourceManager.getColor(128, 128, 192));
 		//canvas.setBounds(arg0, arg1, arg2, arg3)
-		canvas.setLocation(100, 100);
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent p) {
 				System.out.print("wszedlemf");
@@ -130,7 +136,7 @@ public class Plainold {
 				p.gc.setTransform(transform);
 					
 				//p.gc.drawImage(image, 0, 0);
-				p.gc.drawImage(image, 0, 0);
+				p.gc.drawImage(image, 50, 50);
 				image.dispose();
 				transform.dispose();
 			}
