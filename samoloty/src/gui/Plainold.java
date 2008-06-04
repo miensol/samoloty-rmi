@@ -50,22 +50,7 @@ public class Plainold {
 
 				//canvas.setLocation(50, 50);
 				canvas.redraw();
-				canvas.addPaintListener(new PaintListener() {
-					public void paintControl(PaintEvent p) {
-						System.out.print("TU");
-					
-						Transform transform = new Transform(Display.getCurrent());
-						Image image = new Image(display, Plainold.class.getResourceAsStream("img/samolocik.gif"));
-						transform.rotate(X);
-						p.gc.setTransform(transform);
-							
-						//p.gc.drawImage(image, 0, 0);
-						p.gc.drawImage(image, 0, 0);
-						image.dispose();
-						transform.dispose();
-					
-					}
-				});
+			
 				
 				
 			}
@@ -133,13 +118,15 @@ public class Plainold {
 	public Canvas createPlain(Shell shell,final float angle) {
 	
 		Canvas canvas = new Canvas(shell, SWT.NULL);
-		canvas.setSize(100, 100);
+		canvas.setSize(200, 200);
+		//canvas.setBounds(arg0, arg1, arg2, arg3)
+		canvas.setLocation(100, 100);
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent p) {
-				System.out.print("wszedlem");
+				System.out.print("wszedlemf");
 				Transform transform = new Transform(Display.getCurrent());
 				Image image = new Image(display, Plainold.class.getResourceAsStream("img/samolocik.gif"));
-				transform.rotate(angle);
+				transform.rotate(X);
 				p.gc.setTransform(transform);
 					
 				//p.gc.drawImage(image, 0, 0);
