@@ -95,7 +95,7 @@ public class Plain {
 	public void run() {
 		setDisplay(Display.getDefault());
 		
-		final Shell shell = new Shell(display);
+		final Shell shell = new Shell(display,SWT.SHELL_TRIM | SWT.NO_BACKGROUND);
 		/*
 		final Canvas plain = createPlain(shell);
 		
@@ -116,15 +116,21 @@ public class Plain {
 			gra.join("Tomek");
 			gra.join("Piotr");
 			gra.start();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	
-		Canvas plain = new MovingImage(shell,"img/samolocik.gif","Tomek");
-		Canvas plain2 = new MovingImage(shell,"img/samolocik2.gif","Piotr");
+		
+		
+		Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
+		Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
+		Canvas board = new GameBoard(shell);
 		plain.setLocation(100, 100);
 		plain2.setLocation(100, 400);
 		
+		Listener wsad = player1(plain);
+		Listener ikjl = player2(plain2);
+		
+		shell.addListener(SWT.KeyDown, wsad);
+		shell.addListener(SWT.KeyUp, wsad);
+		shell.addListener(SWT.KeyDown, ikjl);
+		shell.addListener(SWT.KeyUp, ikjl);
 		shell.setSize(800, 610);
 		
 		shell.setText("Zajebiste samoloty");
@@ -135,6 +141,12 @@ public class Plain {
 		}
 		
 		display.dispose();
+		gra.removePlayer("Piotr");
+		gra.removePlayer("Tomek");
+		gra.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	//wyswietlenie samolotu

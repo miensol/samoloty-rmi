@@ -1,8 +1,5 @@
 package gui;
 
-import game.Game;
-
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 import org.eclipse.swt.SWT;
@@ -13,50 +10,55 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Display;
 
 import common.Piloting;
-import common.Playing;
-import core.Flying;
 
-public class MovingImage extends Canvas implements PaintListener{
+public abstract class MovingImage extends Canvas implements PaintListener{
 	protected Image image;
 	protected ImageData imageData;
 	protected int height;
 	protected int width;
-	public String nick;
-	public Playing player;
-	public Piloting plane;
-	MovingImage(Composite composite, String path, String nick){
-		super(composite,SWT.NULL);
-		this.image = new Image(Plain.display,MovingImage.class.getResourceAsStream(path));
+
+
+	protected Piloting moving;
+	/**
+	 * 
+	 * @param composite required by canvas
+	 * @param path path to image that should be displayed
+	 * @param remoteName name of remote object that implement Piloting interface
+	 */
+	MovingImage(Composite composite, String path){
+		super(composite,SWT.NONE);
+		this.image = new Image(composite.getDisplay(),MovingImage.class.getResourceAsStream(path));
 		this.imageData = this.image.getImageData();
 		this.height = this.imageData.height;
 		this.width = this.imageData.width;
-		this.setSize(this.width+10,this.height+10);
-		this.nick = nick;
-		this.plane = this.getPlane();
-		
+		this.setBackground(this.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+		this.setSize(Math.max(this.width, this.height),Math.max(this.width, this.height));
+				
 		// beautiful ;d;d;d;d
 		this.addPaintListener(this);
-		try{
-			short x = 10;
-			plane.setSpeedX(x);
-		}catch(Exception e){
-			
-		}
 		
 	}
-	
+	/**
+	 * This method should find and return remote interface Piloting 
+	 * according to what type of MovingImage it is
+	 * @return remote interface Piloting
+	 */
+	protected abstract Piloting getPiloting();
+
 	@Override
 	public void paintControl(PaintEvent pEvent) {
-		System.out.print("wszedlem");
-		//imageRotate(pEvent, 2);
-		pEvent.gc.drawImage(this.image, 0, 0);
+		//System.out.print("wszedlem");
 		try{
-			this.setLocation(this.plane.getX(), this.plane.getY());
-			System.out.println("Pozycja : "+this.plane.getX()+" "+this.plane.getY());
+			int angle = Math.round(this.moving.getAngle()*180/(float)Math.PI);
+			//System.out.println("Kat : " + this.moving.getAngle());
+			System.out.println("Kat : " + angle);	
+			this.imageRotate(pEvent,moving.getAngle());
+			pEvent.gc.drawImage(this.image, 0, 0);
+			this.setLocation(this.moving.getX(), this.moving.getY());		
+			System.out.println("Pozycja : "+this.moving.getX()+" "+this.moving.getY());
 		}catch(RemoteException e){
 			System.err.println("Wystapil blad na serwerze!");
 			e.printStackTrace();
@@ -67,17 +69,16 @@ public class MovingImage extends Canvas implements PaintListener{
 	@Override
 	public void setLocation(int x, int y) {
 		try{
-			this.plane.setX(((Integer)x).shortValue());
-			this.plane.setY(((Integer)y).shortValue());
+			this.moving.setX(((Integer)x).shortValue());
+			this.moving.setY(((Integer)y).shortValue());
 		}catch(RemoteException e){
 			System.out.println("Nie moge ruszyc gracza przez MovingImage");
 			e.printStackTrace(System.out);
 		}
 		super.setLocation(x, y);
 	}
-	public void imageRotate(PaintEvent pEvent,int angle){
-		//check java abilities
-		
+	
+	public void imageRotate(PaintEvent pEvent,float angle){
 		pEvent.gc.setAdvanced(true);
 		if (!pEvent.gc.getAdvanced()){
 			pEvent.gc.drawText("Advanced graphics not supported", 30, 30, true);
@@ -90,20 +91,6 @@ public class MovingImage extends Canvas implements PaintListener{
 	}
 	
 	
-	public Piloting getPlane(){
-		
-		try{
-			/*for(String s:Naming.list(Game.URL_BASE))
-				System.out.println(s);
-			System.out.println("A szukam : " + Game.URL_BASE+"/"+this.nick);*/
-			this.player = (Playing)Naming.lookup(Game.URL_BASE+"/"+this.nick);
-			
-			return this.player.getPlane();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 
 }

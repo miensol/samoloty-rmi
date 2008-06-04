@@ -31,7 +31,8 @@ public class PlaneGame extends Game implements Gaming,
 	protected Map<String, Player> players;
 	protected String url;
 	protected String name = "PlaneGame";
-	protected Thread actinos;
+	protected Thread actions;
+	private boolean stopped = false;
 	public PlaneGame(String nick) throws RemoteException {
 
 		super(nick);
@@ -45,8 +46,6 @@ public class PlaneGame extends Game implements Gaming,
 		this.players = Collections
 				.synchronizedMap(new HashMap<String, Player>());
 		
-		this.actinos = new Thread(this);
-		
 		
 	}
 
@@ -58,7 +57,11 @@ public class PlaneGame extends Game implements Gaming,
 	@Override
 	public void start() throws RemoteException {
 		// TODO Auto-generated method stub
-		this.actinos.start();
+		
+		if( this.actions !=null && this.actions.isAlive() )
+			throw new RemoteException("Gra zostala juz rozpoczeta");
+		this.actions = new Thread(this);
+		this.actions.start();
 		System.out.println("Game started");
 		
 	}
@@ -66,6 +69,9 @@ public class PlaneGame extends Game implements Gaming,
 	@Override
 	public void stop() throws RemoteException {
 		// TODO Auto-generated method stub
+		this.stopped = true;
+		//this.actinos.interrupt();
+		//this.unbindAll();
 		System.out.println("Game stopped");
 	}
 
@@ -160,11 +166,12 @@ public class PlaneGame extends Game implements Gaming,
 	}
 
 	public void moveAll() throws RemoteException {
-		System.out.println("Jestem w moveAll!");
+		//System.out.println("Jestem w moveAll!");
 		for(Map.Entry<String, Player> k : this ){
-			System.out.println("Ruszam gracza : " + k.getKey());
+			//System.out.println("Ruszam gracza : " + k.getKey());
 			Piloting plane = k.getValue().getPlane();
 			plane.move();
+			plane.turnLeft(4F * (float)Math.PI/180);
 		}
 	}
 	@Override
@@ -174,7 +181,7 @@ public class PlaneGame extends Game implements Gaming,
 			do{
 				Thread.sleep(500);
 				this.moveAll();
-			}while(true);
+			}while(!this.stopped);
 			
 		}catch(InterruptedException e){
 			System.out.println("Watek actions w Grze zostal zatrzymany!");

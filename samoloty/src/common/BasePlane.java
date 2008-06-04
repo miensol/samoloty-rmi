@@ -3,7 +3,7 @@
  */
 package common;
 
-import gui.Board;
+import gui.GameBoard;
 
 import java.rmi.RemoteException;
 
@@ -63,10 +63,10 @@ public class BasePlane extends Movable<Short> implements Piloting {
 			this.x = 0;
 		if( this.y < 0 )
 			this.y = 0;
-		if( this.x > Board.width )
-			this.x = Board.width;
-		if ( this.y > Board.height )
-			this.y = Board.height;
+		if( this.x > GameBoard.width )
+			this.x = GameBoard.width;
+		if ( this.y > GameBoard.height )
+			this.y = GameBoard.height;
 	}
 
 	/**
@@ -92,20 +92,26 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	}
 
 	@Override
-	public void turnLeft(Float angle) throws RemoteException {
+	public void turnRight(Float angle) throws RemoteException {
+		if( angle < 0 && Math.abs(angle)>Math.PI)
+			throw new RemoteException("Blad turnRight: Kat powinien byc dodatni i mniejszy od PI");
+
 		this.angle += angle;
 		// sets angle between 0 and 2PI
-		if (this.angle > 2 * Math.PI)
-			this.angle -= 2 * Math.PI;
+		if (this.angle >  Math.PI)
+			this.angle = (float)Math.PI * 2 - this.angle;
 		normalizeSpeed();
 	}
 
 	@Override
-	public void turnRight(Float angle) throws RemoteException {
+	public void turnLeft(Float angle) throws RemoteException {
+		if( angle < 0 && Math.abs(angle)>Math.PI)
+			throw new RemoteException("Blad turnLeft: Kat powinien byc dodatni i mniejszy od PI");
 		this.angle -= angle;
+		System.out.println("Skercam w lewo");
 		// sets angle between 0 and 2PI
-		if (this.angle < 0)
-			this.angle += 2 * Math.PI;
+		if (this.angle < -Math.PI)
+			this.angle =  (float)Math.PI * 2 + this.angle;
 		normalizeSpeed();
 	}
 
@@ -114,7 +120,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	 * Turns left 90 degrees
 	 */
 	public void turnLeft() throws RemoteException {
-		this.turnLeft((float) Math.PI * 0.25F);
+		this.turnLeft((float) Math.PI * 0.5F);
 	}
 
 	/**
@@ -122,7 +128,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	 */
 	@Override
 	public void turnRight() throws RemoteException {
-		this.turnRight((float) Math.PI * 0.25F);
+		this.turnRight((float) Math.PI * 0.5F);
 	}
 
 	/**

@@ -4,6 +4,7 @@
 package game;
 
 import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -65,9 +66,11 @@ public class Game extends UnicastRemoteObject {
 		try{
 			for(String s:this.registry.list()){
 				System.out.print("Unbinding : " + s );
-				
+				this.registry.unbind(s);
 				System.out.println("\tDone!");
 			}
+		}catch(NotBoundException e){
+			System.out.println("dziwaczny blad nie powinen sie pojawic");		
 		}catch(AccessException e){
 			System.out.println("Blad dostepu podczas usuwania obiektow z rejestru!");
 			e.printStackTrace(System.out);
