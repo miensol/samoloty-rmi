@@ -5,6 +5,7 @@ package common;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 /**
  * Represents methods that can be called locally and remotely
@@ -12,7 +13,7 @@ import java.rmi.RemoteException;
  * @author Piotr
  * 
  */
-public interface Gaming extends Remote {
+public interface Gaming extends Remote, Iterable<Map.Entry<String, Playing>> {
 	/**
 	 * 
 	 * @param nick

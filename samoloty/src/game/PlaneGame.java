@@ -23,12 +23,12 @@ import common.Playing;
  * 
  */
 public class PlaneGame extends Game implements Gaming,
-		Iterable<Map.Entry<String, Player>>,
+		Iterable<Map.Entry<String, Playing>>,
 		Runnable {
 	/**
 	 * Contains an interface to this games
 	 */
-	protected Map<String, Player> players;
+	protected Map<String, Playing> players;
 	protected String url;
 	protected String name = "PlaneGame";
 	protected Thread actions;
@@ -44,13 +44,13 @@ public class PlaneGame extends Game implements Gaming,
 
 		// map with game players
 		this.players = Collections
-				.synchronizedMap(new HashMap<String, Player>());
+				.synchronizedMap(new HashMap<String, Playing>());
 		
 		
 	}
 
 	@Override
-	public Iterator<Entry<String, Player>> iterator() {
+	public Iterator<Entry<String, Playing>> iterator() {
 		return this.players.entrySet().iterator();
 	}
 	
@@ -85,7 +85,7 @@ public class PlaneGame extends Game implements Gaming,
 	 * Returns Player if player with nick exists otherwise null
 	 */
 	@Override
-	public Player getPlayer(String nick) throws RemoteException {
+	public Playing getPlayer(String nick) throws RemoteException {
 		return this.players.get(nick);
 	}
 
@@ -97,7 +97,7 @@ public class PlaneGame extends Game implements Gaming,
 	 * @return Player if found
 	 * @throws RemoteException
 	 */
-	public Player getPlayer(Player player) throws RemoteException {
+	public Playing getPlayer(Player player) throws RemoteException {
 		return this.players.get(player);
 	}
 
@@ -109,7 +109,7 @@ public class PlaneGame extends Game implements Gaming,
 	 * @return removed player or null if such didn't exist
 	 * @throws RemoteException
 	 */
-	public Player removePlayer(Player player) throws RemoteException {
+	public Playing removePlayer(Player player) throws RemoteException {
 		System.out.println("Player " + player.getNick() + " quited the game!");
 		this.unbindPlayer(nick);
 		return this.players.remove(player.getNick());
@@ -123,7 +123,7 @@ public class PlaneGame extends Game implements Gaming,
 	 * @return removed player or null if such didn't exist
 	 * @throws RemoteException
 	 */
-	public Player removePlayer(String nick) throws RemoteException {
+	public Playing removePlayer(String nick) throws RemoteException {
 		System.out.println("Player " + nick + " quited the game!");
 		this.unbindPlayer(nick);
 		return this.players.remove(nick);
@@ -167,7 +167,7 @@ public class PlaneGame extends Game implements Gaming,
 
 	public void moveAll() throws RemoteException {
 		//System.out.println("Jestem w moveAll!");
-		for(Map.Entry<String, Player> k : this ){
+		for(Map.Entry<String, Playing> k : this ){
 			//System.out.println("Ruszam gracza : " + k.getKey());
 			Piloting plane = k.getValue().getPlane();
 			plane.move();

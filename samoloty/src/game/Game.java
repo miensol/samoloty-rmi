@@ -28,8 +28,8 @@ public class Game extends UnicastRemoteObject {
 	 */
 	protected String nick;
 	public final static int PORT = 10002;
-	public final static String HOST = "rmi://localhost";
-	public final static String URL_BASE = Game.HOST + ":" + Game.PORT;
+	public static String HOST = "rmi://localhost";
+	public static String URL_BASE = Game.HOST + ":" + Game.PORT;
 
 	/**
 	 * Create game

@@ -120,7 +120,7 @@ public class Plain {
 		
 		Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
 		Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
-		Canvas board = new GameBoard(shell);
+		Canvas board = new GameBoard(shell,Game.URL_BASE+"/PlaneGame");
 		plain.setLocation(100, 100);
 		plain2.setLocation(100, 400);
 		
