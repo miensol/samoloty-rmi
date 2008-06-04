@@ -20,7 +20,7 @@ import common.Piloting;
 import common.Playing;
 import core.Flying;
 
-public class PlaneImage extends Canvas implements PaintListener{
+public class MovingImage extends Canvas implements PaintListener{
 	protected Image image;
 	protected ImageData imageData;
 	protected int height;
@@ -28,9 +28,9 @@ public class PlaneImage extends Canvas implements PaintListener{
 	public String nick;
 	public Playing player;
 	public Piloting plane;
-	PlaneImage(Composite composite, String path, String nick){
+	MovingImage(Composite composite, String path, String nick){
 		super(composite,SWT.NULL);
-		this.image = new Image(Plain.display,PlaneImage.class.getResourceAsStream(path));
+		this.image = new Image(Plain.display,MovingImage.class.getResourceAsStream(path));
 		this.imageData = this.image.getImageData();
 		this.height = this.imageData.height;
 		this.width = this.imageData.width;
@@ -70,7 +70,7 @@ public class PlaneImage extends Canvas implements PaintListener{
 			this.plane.setX(((Integer)x).shortValue());
 			this.plane.setY(((Integer)y).shortValue());
 		}catch(RemoteException e){
-			System.out.println("Nie moge ruszyc gracza przez PlaneImage");
+			System.out.println("Nie moge ruszyc gracza przez MovingImage");
 			e.printStackTrace(System.out);
 		}
 		super.setLocation(x, y);
