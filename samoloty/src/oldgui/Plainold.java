@@ -1,20 +1,16 @@
-package gui;
-
-import game.Game;
-
-import java.rmi.Naming;
-import java.util.Scanner;
+package oldgui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.*;
+
+import com.cloudgarden.resource.SWTResourceManager;
 
 
-import common.Gaming;
-
-
-public class Plain {
+public class Plainold {
 
 	public static Display display;
 
@@ -25,10 +21,11 @@ public class Plain {
 	public void setDisplay(Display disp) {
 		display = disp;
 	}
-	static int X = 0;
+	static int X = 1;
 	 static int Y = 0;
 	 static int X2 = 0;
 	 static int Y2 = 0;
+	 static int R =0;
 	public Listener player1(final Canvas canvas){
 		Listener listener = new Listener() {
 			public void handleEvent(Event e) {
@@ -52,7 +49,12 @@ public class Plain {
 				}
 				}
 				System.out.print(X + " " +Y + "\n");
-				canvas.setLocation(X, Y);
+
+				//canvas.setLocation(50, 50);
+				canvas.redraw();
+			
+				
+				
 			}
 		};
 		
@@ -61,8 +63,7 @@ public class Plain {
 	}
 	
 	//reakcja na klawisze i k j l
-	public Listener player2(final Canvas canvas){
-		
+	public Listener player2(final Canvas canvas2){
 		Listener listener = new Listener() {
 			public void handleEvent(Event e) {
 				
@@ -85,7 +86,7 @@ public class Plain {
 				}
 				}
 				System.out.print(X2 + " " +Y2 + "\n");
-				canvas.setLocation(X2, Y2);
+				//canvas2.redraw();
 			}
 		};
 		
@@ -94,77 +95,57 @@ public class Plain {
 	}
 	 
 	public void run() {
-		setDisplay(Display.getDefault());
-		
-		final Shell shell = new Shell(display,SWT.SHELL_TRIM | SWT.NO_BACKGROUND);
-		/*
-		final Canvas plain = createPlain(shell);
-		
-		final Canvas plain2 = createPlain(shell);		
-		plain.setBackground(display.getSystemColor(SWT.COLOR_BLUE));
-	
+		setDisplay(new Display());
+		final Shell shell = new Shell(display);
+		shell.setText("Samolocik");
+		final Canvas plain = createPlain(shell,0);	
+		final Canvas plain2 = createPlain(shell,0);	
+		plain.setLocation(100, 100);
+		plain2.setLocation(200, 200);
 		Listener wsad = player1(plain);
 		Listener ikjl = player2(plain2);
-		
-		shell.addListener(SWT.KeyDown, player1(plain));
-		shell.addListener(SWT.KeyUp, wsad);
-		shell.addListener(SWT.KeyDown, ikjl);
-		shell.addListener(SWT.KeyUp, ikjl);
-		*/
-		Gaming gra;
-		try{
-			gra = (Gaming)Naming.lookup(Game.URL_BASE+"/PlaneGame");
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Podaj nick : ");
-			String nick = sc.nextLine();
-			gra.join(nick);
-			GameBoard board = new GameBoard(shell,Game.URL_BASE+"/PlaneGame",nick);
-			board.start();
-			if ( gra.getPlayerCount() > 2)
-				gra.start();
-		//Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
-		//Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
-		
-	/*	plain.setLocation(100, 100);
-		plain2.setLocation(100, 400);
-		
-		Listener wsad = player1(plain);
-		Listener ikjl = player2(plain2);
-		
 		shell.addListener(SWT.KeyDown, wsad);
 		shell.addListener(SWT.KeyUp, wsad);
-		shell.addListener(SWT.KeyDown, ikjl);
-		shell.addListener(SWT.KeyUp, ikjl);
-		*/
-		shell.setSize(800, 610);
+		//shell.addListener(SWT.KeyDown, ikjl);
+		//shell.addListener(SWT.KeyUp, ikjl);
 		
+		shell.setSize(600, 600);
+
 		shell.setText("Zajebiste samoloty");
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		
 		display.dispose();
-		board.stop();
-		gra.removePlayer(nick);
-		gra.stop();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	//wyswietlenie samolotu
-	public Canvas createPlain(Shell shell) {
-		
+	public Canvas createPlain(Shell shell,final float angle) {
+	
 		Canvas canvas = new Canvas(shell, SWT.NULL);
-		canvas.setSize(48, 47);
+		canvas.setSize(600, 600);
+		canvas.setBackground(SWTResourceManager.getColor(128, 128, 192));
+		
+		
+		//canvas.setBounds(arg0, arg1, arg2, arg3)
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent p) {
-				Image image = new Image(display, Plain.class.getResourceAsStream("img/samolocik.jpg"));
-				p.gc.drawImage(image, 0, 0);
-				image.dispose();
-
+				System.out.print("wszedlemf");
+				Transform transform = new Transform(Display.getCurrent());
+				Image image = new Image(display, Plainold.class.getResourceAsStream("img/samolocik.gif"));
+				transform.rotate(X);//*180)/((float)Math.PI));
+				p.gc.setTransform(transform);
+				
+				int x = (int)(80*Math.sin(Math.PI*X/180));
+				int y = (int)(80*Math.cos(Math.PI*X/180));
+				System.out.print("\nx: " +x +"y " +y);
+				//p.gc.drawImage(image, 0, 0);
+				
+				p.gc.drawImage(image,x,y);
+				p.gc.drawImage(image,0,0);
+				//image.dispose();
+				//transform.dispose();
 			}
 		});
 		return canvas;
@@ -182,6 +163,6 @@ public class Plain {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		new Plain().run();
+		new Plainold().run();
 	}
 }

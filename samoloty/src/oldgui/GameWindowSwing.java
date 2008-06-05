@@ -1,4 +1,4 @@
-package gui;
+package oldgui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Component;
@@ -318,7 +318,7 @@ public class GameWindowSwing extends javax.swing.JFrame {
 		if(quitGameWindow == null) {
 			quitGameWindow = new AbstractAction("quit", null) {
 				public void actionPerformed(ActionEvent evt) {
-
+					
 				}
 			};
 		}

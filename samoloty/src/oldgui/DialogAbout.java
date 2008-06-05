@@ -1,4 +1,4 @@
-package gui;
+package oldgui;
 
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;

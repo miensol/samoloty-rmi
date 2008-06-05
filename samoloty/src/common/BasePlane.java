@@ -3,9 +3,10 @@
  */
 package common;
 
-import gui.GameBoard;
 
 import java.rmi.RemoteException;
+
+import oldgui.GameBoard;
 
 import core.Movable;
 
