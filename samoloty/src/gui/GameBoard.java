@@ -83,7 +83,15 @@ public class GameBoard extends Canvas implements Runnable {
 			}
 		}
 	}
-	
+	/**
+	 * dispose canvases
+	 */
+	protected void clearPlayers(){
+		for(MovingImage mi:this.canvases){
+			mi.dispose();
+			this.canvases.remove(mi);
+		}
+	}
 	private boolean isInGame(String nick){
 		for(MovingImage mi:this.canvases){
 			if( mi instanceof PlaneImage){
@@ -146,19 +154,5 @@ public class GameBoard extends Canvas implements Runnable {
 			e.printStackTrace();
 			return;
 		}
-		
-		try{
-			do{
-				for(MovingImage mi:this.canvases){
-					mi.redraw();
-					System.out.println("Odrysowalem ");
-				}
-				Thread.sleep(500);
-			}while(!stopped);
-		}catch(InterruptedException e){
-			System.out.println("BoardGame thread was interuppted while sleeping");
-			return;
-		}
 	}
-	
 }
