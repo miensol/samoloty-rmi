@@ -1,4 +1,4 @@
-package oldgui;
+package qui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Component;
