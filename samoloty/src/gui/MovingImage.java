@@ -53,9 +53,9 @@ public abstract class MovingImage extends Canvas implements PaintListener{
 		//System.out.print("wszedlem");
 		try{
 			int angle = Math.round(this.moving.getAngle()*180/(float)Math.PI);
-			//System.out.println("Kat : " + this.moving.getAngle());
+			System.out.println("Kat : " + this.moving.getAngle()+" pozycja x : "+this.moving.getX());
 			System.out.println("Kat : " + angle);	
-			this.imageRotate(pEvent,moving.getAngle());
+			this.imageRotate(pEvent,angle);
 			pEvent.gc.drawImage(this.image, 0, 0);
 			this.setLocation(this.moving.getX(), this.moving.getY());		
 			System.out.println("Pozycja : "+this.moving.getX()+" "+this.moving.getY());
@@ -68,13 +68,15 @@ public abstract class MovingImage extends Canvas implements PaintListener{
 	}
 	@Override
 	public void setLocation(int x, int y) {
-		try{
+		/*try{
 			this.moving.setX(((Integer)x).shortValue());
 			this.moving.setY(((Integer)y).shortValue());
-		}catch(RemoteException e){
+		}catch(RemoteException e)
+		{
 			System.out.println("Nie moge ruszyc gracza przez MovingImage");
 			e.printStackTrace(System.out);
 		}
+		*/
 		super.setLocation(x, y);
 	}
 	
@@ -88,6 +90,12 @@ public abstract class MovingImage extends Canvas implements PaintListener{
 		transform.rotate(angle);
 		pEvent.gc.setTransform(transform);
 		transform.dispose();
+	}
+	/**
+	 * @return the moving
+	 */
+	public Piloting getMoving() {
+		return moving;
 	}
 	
 	

@@ -50,4 +50,9 @@ public interface Gaming extends Remote {
 	/*
 	Playing next() throws RemoteException;
 	boolean hasNext() throws RemoteException;*/
+	
+	boolean isStopped() throws RemoteException;
+	boolean isWaitForPlayers() throws RemoteException;
+	
+	int getPlayerCount() throws RemoteException;
 }

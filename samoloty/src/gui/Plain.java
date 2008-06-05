@@ -3,6 +3,7 @@ package gui;
 import game.Game;
 
 import java.rmi.Naming;
+import java.util.Scanner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
@@ -113,15 +114,18 @@ public class Plain {
 		Gaming gra;
 		try{
 			gra = (Gaming)Naming.lookup(Game.URL_BASE+"/PlaneGame");
-			gra.join("Tomek");
-			gra.join("Piotr");
-			gra.start();
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Podaj nick : ");
+			String nick = sc.nextLine();
+			gra.join(nick);
+			GameBoard board = new GameBoard(shell,Game.URL_BASE+"/PlaneGame",nick);
+			board.start();
+			if ( gra.getPlayerCount() > 2)
+				gra.start();
+		//Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
+		//Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
 		
-		
-		Canvas plain = new PlaneImage(shell,"img/samolocik.gif","Tomek");
-		Canvas plain2 = new PlaneImage(shell,"img/samolocik2.gif","Piotr");
-		Canvas board = new GameBoard(shell,Game.URL_BASE+"/PlaneGame");
-		plain.setLocation(100, 100);
+	/*	plain.setLocation(100, 100);
 		plain2.setLocation(100, 400);
 		
 		Listener wsad = player1(plain);
@@ -131,6 +135,7 @@ public class Plain {
 		shell.addListener(SWT.KeyUp, wsad);
 		shell.addListener(SWT.KeyDown, ikjl);
 		shell.addListener(SWT.KeyUp, ikjl);
+		*/
 		shell.setSize(800, 610);
 		
 		shell.setText("Zajebiste samoloty");
@@ -141,8 +146,8 @@ public class Plain {
 		}
 		
 		display.dispose();
-		gra.removePlayer("Piotr");
-		gra.removePlayer("Tomek");
+		board.stop();
+		gra.removePlayer(nick);
 		gra.stop();
 		} catch (Exception e) {
 			e.printStackTrace();

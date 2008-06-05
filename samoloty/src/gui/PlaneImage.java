@@ -31,6 +31,8 @@ public class PlaneImage extends MovingImage {
 	}
 	@Override
 	protected Piloting getPiloting() {
+		if( this.moving != null)
+			return this.moving;
 		try {
 			String url = Game.URL_BASE + "/" + this.nick + "/plane";
 			System.out.println("Chce pobrac : " + url);
@@ -41,6 +43,12 @@ public class PlaneImage extends MovingImage {
 			e.printStackTrace();
 		}	
 		return null;
+	}
+	/**
+	 * @return the nick
+	 */
+	public String getNick() {
+		return nick;
 	}
 
 }

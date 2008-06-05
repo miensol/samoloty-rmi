@@ -50,7 +50,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	 */
 	@Override
 	public void move() throws RemoteException {
-		System.out.println("Player " + this.pilotName + " moved");
+		//System.out.println("Player " + this.pilotName + " moved");
 		this.x += this.speedX;
 		this.y += this.speedY;
 		checkCoordinates();

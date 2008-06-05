@@ -32,7 +32,8 @@ public class PlaneGame extends Game implements Gaming,
 	protected String url;
 	protected String name = "PlaneGame";
 	protected Thread actions;
-	private boolean stopped = false;
+	private boolean stopped = true;
+	protected boolean waitForPlayers = true;
 	public PlaneGame(String nick) throws RemoteException {
 
 		super(nick);
@@ -58,12 +59,14 @@ public class PlaneGame extends Game implements Gaming,
 	@Override
 	public void start() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+		this.waitForPlayers = false;
 		if( this.actions !=null && this.actions.isAlive() )
 			throw new RemoteException("Gra zostala juz rozpoczeta");
+		this.stopped = false;
 		this.actions = new Thread(this);
 		this.actions.start();
 		System.out.println("Game started");
+		
 		
 	}
 
@@ -74,6 +77,7 @@ public class PlaneGame extends Game implements Gaming,
 		//this.actinos.interrupt();
 		//this.unbindAll();
 		System.out.println("Game stopped");
+		this.waitForPlayers = true;
 	}
 
 	@Override
@@ -144,7 +148,10 @@ public class PlaneGame extends Game implements Gaming,
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public int getPlayerCount() throws RemoteException {
+		return this.players.size();
+	}
 	@Override
 	public Playing join(String nick) throws RemoteException {
 		if (nick == null || this.players.containsKey(nick))
@@ -169,10 +176,9 @@ public class PlaneGame extends Game implements Gaming,
 	public void moveAll() throws RemoteException {
 		//System.out.println("Jestem w moveAll!");
 		for(Map.Entry<String, Playing> k : this ){
-			//System.out.println("Ruszam gracza : " + k.getKey());
+			System.out.println("Ruszam gracza : " + k.getKey());
 			Piloting plane = k.getValue().getPlane();
 			plane.move();
-			plane.turnLeft(4F * (float)Math.PI/180);
 		}
 	}
 	@Override
@@ -192,5 +198,19 @@ public class PlaneGame extends Game implements Gaming,
 		}
 		
 		
+	}
+
+	/**
+	 * @return the stopped
+	 */
+	public boolean isStopped() {
+		return stopped;
+	}
+
+	/**
+	 * @return the waitForPlayers
+	 */
+	public boolean isWaitForPlayers() {
+		return waitForPlayers;
 	}
 }
