@@ -44,8 +44,6 @@ import org.eclipse.swt.widgets.Shell;
 public class GameWindowSwing extends javax.swing.JFrame {
 	private JMenuBar jMenuBar1;
 	private JButton jConnectButtonCancle;
-	private Shell shell1;
-	private Canvas canvas1;
 	private AbstractAction quitGameWindow;
 	private JMenuItem jAbout;
 	private AbstractAction openAboutDialog;
@@ -89,13 +87,6 @@ public class GameWindowSwing extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			getContentPane().add(getCanvas1(), BorderLayout.CENTER);
-			{
-				shell1 = SWT_AWT.new_Shell(Display.getDefault(), canvas1);
-				GridLayout shell1Layout = new GridLayout();
-				shell1Layout.makeColumnsEqualWidth = true;
-				shell1.setLayout(shell1Layout);
-			}
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
@@ -332,13 +323,6 @@ public class GameWindowSwing extends javax.swing.JFrame {
 			};
 		}
 		return quitGameWindow;
-	}
-	
-	private Canvas getCanvas1() {
-		if(canvas1 == null) {
-			canvas1 = new Canvas();
-		}
-		return canvas1;
 	}
 
 	//$protect>>$
