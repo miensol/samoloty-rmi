@@ -505,24 +505,7 @@ public class ClientView extends javax.swing.JFrame {
 			jLabelPoints.setText("Points");
 		}
 		return jLabelPoints;
-	}
-
-	private JTextField getJTextField2() {
-		if(jTextField2 == null) {
-			jTextField2 = new JTextField();
-			jTextField2.setText("0");
-		}
-		return jTextField2;
-	}
-	
-	private JButton getJButton2() {
-		if(jButton2 == null) {
-			jButton2 = new JButton();
-			jButton2.setText("Player1");
-		}
-		return jButton2;
-	}
-	
+	}	
 	private JTextField getJTextPlayer2() {
 		if(jTextPlayer2 == null) {
 			jTextPlayer2 = new JTextField();
