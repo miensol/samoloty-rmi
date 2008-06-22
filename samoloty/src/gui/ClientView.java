@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.beans.Visibility;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -24,6 +25,9 @@ import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingUtilities;
 
 
@@ -122,6 +126,7 @@ public class ClientView extends javax.swing.JFrame {
 			this.setMaximumSize(new java.awt.Dimension(953, 625));
 			this.setMinimumSize(new java.awt.Dimension(953, 625));
 			this.setResizable(false);
+			this.setTitle("Planes");
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
@@ -385,6 +390,7 @@ public class ClientView extends javax.swing.JFrame {
 			jPanelCenter.setSize(800, 600);
 			jPanelCenter.setBackground(new java.awt.Color(79,79,255));
 			jPanelCenter.setVisible(false);
+			jPanelCenter.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		}
 		return jPanelCenter;
 	}
@@ -396,6 +402,7 @@ public class ClientView extends javax.swing.JFrame {
 			jPanelRight.setLayout(jPanelRightLayout);
 			jPanelRight.setBackground(new java.awt.Color(170,159,157));
 			jPanelRight.setVisible(false);
+			jPanelRight.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			jPanelRightLayout.setHorizontalGroup(jPanelRightLayout.createSequentialGroup()
 				.addGap(6)
 				.addGroup(jPanelRightLayout.createParallelGroup()
