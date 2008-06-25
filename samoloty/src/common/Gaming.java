@@ -3,6 +3,7 @@
  */
 package common;
 
+import java.awt.Event;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -55,4 +56,6 @@ public interface Gaming extends Remote {
 	boolean isWaitForPlayers() throws RemoteException;
 	
 	int getPlayerCount() throws RemoteException;
+	
+	void sendEvent(String nick,Event e) throws RemoteException;
 }

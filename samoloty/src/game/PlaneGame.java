@@ -3,6 +3,7 @@
  */
 package game;
 
+import java.awt.Event;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -212,5 +213,11 @@ public class PlaneGame extends Game implements Gaming,
 	 */
 	public boolean isWaitForPlayers() {
 		return waitForPlayers;
+	}
+	
+	@Override
+	public void sendEvent(String nick, Event e) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 }
