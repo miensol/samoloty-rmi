@@ -1,10 +1,20 @@
 package gui;
+import game.Game;
+import game.PlaneGame;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.Visibility;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -33,6 +43,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingUtilities;
+
+import common.Gaming;
 
 import animate.AnimationCanvas;
 
@@ -102,7 +114,9 @@ public class ClientView extends javax.swing.JFrame {
 	private JMenu jGame;
 	private AbstractAction closeConnection;
 	
-
+	private PlaneGame game;
+	private Gaming gaming;
+	private String myNick ;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -678,9 +692,21 @@ public class ClientView extends javax.swing.JFrame {
 		if(createServer == null) {
 			createServer = new AbstractAction("Create", null) {
 				public void actionPerformed(ActionEvent evt) {
-								
+					myNick = jConnectNick.getText();			
 					//TODO Create server
 					//If the server was set up properly
+					try{
+						game = new PlaneGame(myNick);
+						gaming = game;
+						game.join(myNick);
+						toLog("Utworzylem serwer!");
+						aBoard.setGame(gaming);
+						addKeyListner();
+					}catch(RemoteException e){
+						toLog(e.getMessage());
+						e.printStackTrace();
+					}
+					
 					jButtonPlayer1.setText(jConnectNick.getText());
 					aBoard.setVisible(true);
 					jPanelRight.setVisible(true);
@@ -690,7 +716,47 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return createServer;
 	}
-	
+	private void toLog(String s){
+		jTextPane1.setText(jTextPane1.getText() + "\n"+s);
+		
+	}
+	private void addKeyListner(){
+		this.addKeyListener(
+				new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						/*try{
+						gaming.sendEvent(myNick, e);
+						}catch(RemoteException ex){
+							toLog("Blad wciskanego przycisku ");
+							ex.printStackTrace();
+						}*/						
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+						// TODO Auto-generated method stub
+						/*
+						try{
+							gaming.sendEvent(myNick, e);
+							}catch(RemoteException ex){
+								toLog("Blad puszczanego przycisku ");
+								ex.printStackTrace();
+							}
+							*/						
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+						// TODO Auto-generated method stub
+						try{
+							gaming.sendEvent(myNick, e);
+							}catch(RemoteException ex){
+								toLog("Blad typed przycisku ");
+								ex.printStackTrace();
+							}						
+					}
+				}
+		);		
+	}
 	private JButton getJConnectButtonJoin() {
 		if(jConnectButtonJoin == null) {
 			jConnectButtonJoin = new JButton();
@@ -706,9 +772,28 @@ public class ClientView extends javax.swing.JFrame {
 		if(joinServer == null) {
 			joinServer = new AbstractAction("Join", null) {
 				public void actionPerformed(ActionEvent evt) {
-					
+					myNick = jConnectNick.getText();
 					//If connection to server succeed
-					
+					try{
+						String url = jConnectGame.getText();
+						Game.HOST = url;
+						url = "rmi://"+url+":"+Game.PORT+"/PlaneGame";						
+						gaming = (Gaming)Naming.lookup(url);
+						if(gaming.isWaitForPlayers()){
+							gaming.join(myNick);
+							addKeyListner();
+						} else
+							toLog("Musisz wybrac inny nick!");
+					}catch(RemoteException e){
+						toLog(e.getMessage());
+						e.printStackTrace();
+					}catch(MalformedURLException e){
+						toLog("Podany adres serwera jest nieprawidlowy!");
+						e.printStackTrace();
+					}catch(NotBoundException e){
+						toLog("Pod podanym adresem nie ma serwera gry!");
+						e.printStackTrace();
+					}
 					jButtonPlayer1.setText(jConnectNick.getText());
 					aBoard.setVisible(true);
 					jPanelRight.setVisible(true);
@@ -750,7 +835,7 @@ public class ClientView extends javax.swing.JFrame {
 	private JTextPane getJTextPane1() {
 		if(jTextPane1 == null) {
 			jTextPane1 = new JTextPane();
-			jTextPane1.setText("komunikaty\n sadfasdf \n sadfasfasfasf \n asdfasdf \n asdasw234 \n 23423asftrt3");
+//			jTextPane1.setText("komunikaty\n sadfasdf \n sadfasfasfasf \n asdfasdf \n asdasw234 \n 23423asftrt3");
 			jTextPane1.setBounds(668, 435, 128, 137);
 			jTextPane1.setEditable(false);
 			jTextPane1.setAutoscrolls(true);

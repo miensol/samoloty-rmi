@@ -268,11 +268,13 @@ public class PlaneGame extends Game implements Gaming,
 	}
 	
 	@Override
-	public synchronized void sendEvent(String nick, Event e) throws RemoteException {
+	public synchronized void sendEvent(String nick, KeyEvent e) throws RemoteException {
 		// TODO Auto-generated method stub
 		Playing player = this.getPlayer(nick);
+		player.setLastSeen(new Date());
 		Piloting plane = player.getPlane();
-		switch(e.key){
+		//System.out.println("Gracz "+nick+" wcisnal klaiwsz!");
+		switch(e.getKeyCode()){			
 			case KeyEvent.VK_A :
 				plane.turnLeft((float)Math.PI/6F);
 				break;

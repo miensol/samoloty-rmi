@@ -4,6 +4,7 @@
 package common;
 
 import java.awt.Event;
+import java.awt.event.KeyEvent;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -58,7 +59,7 @@ public interface Gaming extends Remote {
 	
 	int getPlayerCount() throws RemoteException;
 	
-	void sendEvent(String nick,Event e) throws RemoteException;
+	void sendEvent(String nick,KeyEvent e) throws RemoteException;
 	
 	Vector<BaseWeapon> getBullets() throws RemoteException;
 	Map<String,Playing> getPlayers() throws RemoteException;

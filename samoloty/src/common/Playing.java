@@ -5,6 +5,7 @@ package common;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Date;
 
 /**
  * Its not pretty should be fixed in future
@@ -21,5 +22,6 @@ public interface Playing extends Remote {
 	Integer getScore() throws RemoteException;
 
 	Piloting getPlane() throws RemoteException;
-
+	public Date getLastSeen() throws RemoteException;
+	public void setLastSeen(Date d) throws RemoteException;
 }

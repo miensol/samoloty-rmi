@@ -4,6 +4,7 @@ import game.PlaneGame;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.Date;
 
 import core.APlayer;
 /**
@@ -15,7 +16,7 @@ public class Player extends APlayer<Integer> implements Playing, Serializable {
 
 	protected BasePlane plane;
 	protected PlaneGame game;
-
+	protected Date lastSeen;
 	public Player(String nick, PlaneGame game) throws RemoteException {
 		super(nick);
 		this.plane = new BasePlane(nick);
@@ -25,7 +26,12 @@ public class Player extends APlayer<Integer> implements Playing, Serializable {
 	public Piloting getPlane() throws RemoteException {
 		return this.plane;
 	}
-
+	public Date getLastSeen() throws RemoteException{
+		return this.lastSeen;
+	}
+	public void setLastSeen(Date d) throws RemoteException{
+		this.lastSeen = d;
+	}
 	/**
 	 * There should not be to Players with the same nick
 	 */
