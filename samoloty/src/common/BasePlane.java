@@ -20,7 +20,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	/**
 	 * Maximal speed of a plane
 	 */
-	protected static short maxSpeed;
+	protected static short maxSpeed = 10;
 
 	/**
 	 * Angle of a plane
@@ -150,5 +150,30 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	public String getPilotName() throws RemoteException {
 		return pilotName;
 	}
+	
+	public void speedUp(){
+		double speed = Math.sqrt(this.speedX * this.speedX + this.speedY
+				* this.speedY);
+		if( speed * 1.1 < this.maxSpeed )
+			speed*=1.1;
 
+		Integer spx = Math.round((float) speed * (float) Math.cos(this.angle));
+		Integer spy = Math.round((float) speed * (float) Math.sin(this.angle));
+		this.speedX = spx.shortValue();
+		this.speedY = spy.shortValue();
+		
+	}
+	
+	public void speedDown(){
+		double speed = Math.sqrt(this.speedX * this.speedX + this.speedY
+				* this.speedY);
+		if( speed * 0.9 > this.maxSpeed*0.5 )
+			speed*=0.9;
+
+		Integer spx = Math.round((float) speed * (float) Math.cos(this.angle));
+		Integer spy = Math.round((float) speed * (float) Math.sin(this.angle));
+		this.speedX = spx.shortValue();
+		this.speedY = spy.shortValue();		
+		
+	}
 }

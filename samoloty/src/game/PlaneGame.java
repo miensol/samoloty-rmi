@@ -4,21 +4,25 @@
 package game;
 
 import java.awt.Event;
+import java.awt.event.KeyEvent;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 import java.util.Map.Entry;
 
 
+import common.BaseWeapon;
 import common.Gaming;
 import common.Piloting;
 import common.Player;
 import common.Playing;
-
+import java.lang.Math;
 /**
  * @author Piotr
  * 
@@ -30,6 +34,7 @@ public class PlaneGame extends Game implements Gaming,
 	 * Contains an interface to this games
 	 */
 	protected Map<String, Playing> players;
+	protected Vector<BaseWeapon> bullets;
 	protected String url;
 	protected String name = "PlaneGame";
 	protected Thread actions;
@@ -48,7 +53,7 @@ public class PlaneGame extends Game implements Gaming,
 		this.players = Collections
 				.synchronizedMap(new HashMap<String, Playing>());
 		
-		
+		this.bullets = new Vector<BaseWeapon>();
 	}
 
 	@Override
@@ -207,7 +212,7 @@ public class PlaneGame extends Game implements Gaming,
 	public boolean isStopped() {
 		return stopped;
 	}
-
+	
 	/**
 	 * @return the waitForPlayers
 	 */
@@ -216,8 +221,36 @@ public class PlaneGame extends Game implements Gaming,
 	}
 	
 	@Override
-	public void sendEvent(String nick, Event e) throws RemoteException {
+	public synchronized void sendEvent(String nick, Event e) throws RemoteException {
 		// TODO Auto-generated method stub
+		Playing player = this.getPlayer(nick);
+		Piloting plane = player.getPlane();
+		switch(e.key){
+			case KeyEvent.VK_A :
+				plane.turnLeft((float)Math.PI/6F);
+				break;
+			case KeyEvent.VK_D :
+				plane.turnRight((float)Math.PI/6F);
+				break;
+				
+			case KeyEvent.VK_W :
+				plane.speedUp();
+				break;
+			case KeyEvent.VK_S:
+				plane.speedDown();
+				break;
+			case KeyEvent.VK_ENTER:
+				if(nick == this.nick)
+					this.start();
+				break;
+			case KeyEvent.VK_Q:
+				if(nick == this.nick)
+					this.stop();
+				break;
 		
+		}
+	}
+	public Vector<BaseWeapon> getBullets() throws RemoteException {
+		return this.bullets;
 	}
 }

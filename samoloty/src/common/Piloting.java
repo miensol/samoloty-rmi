@@ -3,6 +3,8 @@
  */
 package common;
 
+import java.rmi.RemoteException;
+
 import core.Flying;
 
 /**
@@ -10,5 +12,6 @@ import core.Flying;
  * 
  */
 public interface Piloting extends Flying<Float, Short> {
-
+	public void speedUp() throws RemoteException;
+	public void speedDown() throws RemoteException;
 }

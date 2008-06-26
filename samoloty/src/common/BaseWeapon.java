@@ -1,10 +1,11 @@
 package common;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
 import core.Movable;
 
-public class BaseWeapon extends Movable<Short> {
+public class BaseWeapon extends Movable<Short> implements Serializable{
 
 	/**
 	 * here we should have information about shooter for now represented by his

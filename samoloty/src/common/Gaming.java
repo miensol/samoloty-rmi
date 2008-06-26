@@ -8,6 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Represents methods that can be called locally and remotely
@@ -58,4 +59,6 @@ public interface Gaming extends Remote {
 	int getPlayerCount() throws RemoteException;
 	
 	void sendEvent(String nick,Event e) throws RemoteException;
+	
+	 Vector<BaseWeapon> getBullets() throws RemoteException;
 }
