@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
 import javax.swing.JLabel;
 
@@ -33,9 +34,8 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public AnimationCanvas() {
 	    setBackground(Color.blue);
 	    setSize(800, 600);
-
-	    image = getToolkit().getImage("E:\\Documents and Settings\\Piotr\\Moje dokumenty\\piotr\\Rok 3 semestr 2\\SR\\samoloty\\src\\animate\\samolocik.gif");
-
+	    URL url = getClass().getResource("samolocik.gif");
+	    image = getToolkit().getImage(url);
 	    MediaTracker mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
 	    try {
