@@ -49,6 +49,7 @@ import animate.AnimationCanvas;
 public class ClientView extends javax.swing.JFrame {
 	private JMenuBar jMenuBar1;
 	private JButton jConnectButtonCancle;
+	private JTextPane jTextPane1;
 	private AbstractAction createServer;
 	private JButton jButtonPlayer8;
 	private JButton jButtonPlayer7;
@@ -393,6 +394,7 @@ public class ClientView extends javax.swing.JFrame {
 			aBoard.setBackground( java.awt.Color.white);
 			aBoard.setVisible(false);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			aBoard.add(getJTextPane1());
 
 		}
 		return aBoard;
@@ -736,6 +738,16 @@ public class ClientView extends javax.swing.JFrame {
 			};
 		}
 		return closeConnection;
+	}
+	
+	private JTextPane getJTextPane1() {
+		if(jTextPane1 == null) {
+			jTextPane1 = new JTextPane();
+			jTextPane1.setText("komunikaty");
+			jTextPane1.setBounds(3, 508, 793, 64);
+			jTextPane1.setEditable(false);
+		}
+		return jTextPane1;
 	}
 
 }
