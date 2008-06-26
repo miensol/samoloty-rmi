@@ -60,5 +60,6 @@ public interface Gaming extends Remote {
 	
 	void sendEvent(String nick,Event e) throws RemoteException;
 	
-	 Vector<BaseWeapon> getBullets() throws RemoteException;
+	Vector<BaseWeapon> getBullets() throws RemoteException;
+	Map<String,Playing> getPlayers() throws RemoteException;
 }

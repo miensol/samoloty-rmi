@@ -3,6 +3,7 @@ package common;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
+import core.MapElement;
 import core.Movable;
 
 public class BaseWeapon extends Movable<Short> implements Serializable{
@@ -19,8 +20,8 @@ public class BaseWeapon extends Movable<Short> implements Serializable{
 
 	protected State state;
 
-	public BaseWeapon(BasePlane p) throws RemoteException {
-		super(p.getX(), p.getY(), p.getSpeedX(), p.getSpeedY());
+	public BaseWeapon(Piloting p) throws RemoteException {
+		super(p.getX(), p.getY(), (short)(p.getSpeedX()*2), (short)(p.getSpeedY()*2));
 		this.shooterNick = p.getPilotName();
 	}
 
@@ -50,5 +51,20 @@ public class BaseWeapon extends Movable<Short> implements Serializable{
 	 */
 	public String getShooterNick() {
 		return shooterNick;
+	}
+	
+	@Override
+	public Short distance(MapElement<Short> a) {
+		short dist = 0;
+		try{
+			short x1 = a.getX();
+			short y1 = a.getY();
+			double d = Math.sqrt((this.x-x1)*(this.x-x1) + (this.y-y1)*(this.y-y1) );
+			dist = (short)Math.round(d);
+		}catch(RemoteException e){
+			System.err.println("Distance Error!!");
+			e.printStackTrace();
+		}
+		return dist;
 	}
 }

@@ -10,6 +10,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,12 +18,15 @@ import java.util.Vector;
 import java.util.Map.Entry;
 
 
+import common.BasePlane;
 import common.BaseWeapon;
 import common.Gaming;
 import common.Piloting;
 import common.Player;
 import common.Playing;
 import java.lang.Math;
+
+import oldgui.GameBoard;
 /**
  * @author Piotr
  * 
@@ -163,7 +167,9 @@ public class PlaneGame extends Game implements Gaming,
 		if (nick == null || this.players.containsKey(nick))
 			throw new RemoteException("Player with nick " + nick
 					+ " already exists");
-
+		if( !this.isWaitForPlayers() )
+			throw new RemoteException("Trying to join to already started game!");
+		
 		Player newPlayer = new Player(nick, this);
 
 		this.registry.rebind(nick, newPlayer);
@@ -171,7 +177,14 @@ public class PlaneGame extends Game implements Gaming,
 		// Player constructor
 		this.registry.rebind(nick + "/plane", newPlayer.getPlane());
 		System.out.println("Player " + nick + " joined the game!");
+		Piloting plane = newPlayer.getPlane();
+		plane.setX((short)100);
+		plane.setY((short)((getPlayerCount()-1)*80));
+		plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));
+		plane.setSpeedY((short)0);
+		plane.setAngle(0F);
 		return this.players.put(nick, newPlayer);
+		
 	}
 
 	@Override
@@ -183,10 +196,42 @@ public class PlaneGame extends Game implements Gaming,
 		//System.out.println("Jestem w moveAll!");
 		for(Map.Entry<String, Playing> k : this ){
 			System.out.println("Ruszam gracza : " + k.getKey());
-			Piloting plane = k.getValue().getPlane();
+			BasePlane plane = (BasePlane)k.getValue().getPlane();
 			plane.move();
+			checkHit(plane);
+		}
+		for(BaseWeapon b:this.bullets){
+			b.move();
+			if( b.getX()<0 || b.getX()>GameBoard.width 
+					|| b.getY()<0 || b.getY()>GameBoard.height )
+				this.bullets.remove(b);			  
+		}
+		
+	}
+	/**
+	 * checks hits adds score
+	 */
+	public void checkHit(BasePlane plane){
+		for(BaseWeapon b:this.bullets){
+			try{
+				if(!b.getShooterNick().equals(plane.getPilotName())
+						&& b.distance(plane)<10){
+					Player shooter = (Player)getPlayer(b.getShooterNick());
+					shooter.setScore(shooter.getScore() + 1);
+					plane.setX((short)0);
+					plane.setY((short)200);
+					plane.setAngle(0F);
+					plane.setSpeedY((short)0);
+					plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));
+					this.bullets.remove(b);
+				}
+			}catch(RemoteException e){
+				System.err.println("checkHit error!!");
+				e.printStackTrace();
+			}
 		}
 	}
+	
 	@Override
 	public void run() {
 		try{
@@ -205,7 +250,9 @@ public class PlaneGame extends Game implements Gaming,
 		
 		
 	}
-
+	public Map<String,Playing> getPlayers() throws RemoteException{
+		return this.players;
+	}
 	/**
 	 * @return the stopped
 	 */
@@ -246,6 +293,12 @@ public class PlaneGame extends Game implements Gaming,
 			case KeyEvent.VK_Q:
 				if(nick == this.nick)
 					this.stop();
+				break;
+			case KeyEvent.VK_SPACE:
+				if( (plane.getLastShoot().getTime()-(new Date()).getTime()) > 2000 ){
+					BaseWeapon nb = new BaseWeapon(plane);
+					this.bullets.add(nb);
+				}
 				break;
 		
 		}

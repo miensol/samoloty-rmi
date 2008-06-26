@@ -2,6 +2,7 @@ package common;
 
 import game.PlaneGame;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
 import core.APlayer;
@@ -10,7 +11,7 @@ import core.APlayer;
  * @author Piotr
  *
  */
-public class Player extends APlayer<Integer> implements Playing {
+public class Player extends APlayer<Integer> implements Playing, Serializable {
 
 	protected BasePlane plane;
 	protected PlaneGame game;

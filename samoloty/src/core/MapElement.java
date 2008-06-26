@@ -41,5 +41,5 @@ public abstract class MapElement<T> extends UnicastRemoteObject {
 	public void setY(T y) throws RemoteException {
 		this.y = y;
 	}
-
+	public abstract T distance(MapElement<T> a);
 }

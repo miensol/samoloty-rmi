@@ -5,9 +5,11 @@ package common;
 
 
 import java.rmi.RemoteException;
+import java.util.Date;
 
 import oldgui.GameBoard;
 
+import core.MapElement;
 import core.Movable;
 
 /**
@@ -30,7 +32,8 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	protected static enum State {
 		WELL, CRASHED
 	};
-
+	protected Date lastShoot;
+	
 	protected State state = State.WELL;
 
 	/**
@@ -42,8 +45,14 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		// should be changed when BasePlane constructor gets parameters
 		super((short) 0, (short) 0, (short) 0, (short) 0);
 		this.pilotName = player;
+		lastShoot = new Date();
 	}
-
+	public Date getLastShoot() throws RemoteException{
+		return this.lastShoot;
+	}
+	public void setLastShoot(Date d) throws RemoteException{
+		this.lastShoot = d;
+	}
 	/*
 	 * Now we can implement this method because we have type Short specified
 	 * 
@@ -175,5 +184,20 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		this.speedX = spx.shortValue();
 		this.speedY = spy.shortValue();		
 		
+	}
+	
+	@Override
+	public Short distance(MapElement<Short> a) {
+		short dist = 0;
+		try{
+			short x1 = a.getX();
+			short y1 = a.getY();
+			double d = Math.sqrt((this.x-x1)*(this.x-x1) + (this.y-y1)*(this.y-y1) );
+			dist = (short)Math.round(d);
+		}catch(RemoteException e){
+			System.err.println("Distance Error!!");
+			e.printStackTrace();
+		}
+		return dist;
 	}
 }
