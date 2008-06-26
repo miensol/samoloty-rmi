@@ -37,6 +37,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingUtilities;
 
+import sun.security.action.GetBooleanAction;
+
+import animate.AnimationCanvas;
+
 import com.cloudgarden.jigloo.jiglooPlugin;
 
 import common.Gaming;
@@ -105,8 +109,8 @@ public class ClientView extends javax.swing.JFrame {
 	private JMenu jGame;
 	private AbstractAction closeConnection;
 	
-	public static Gaming game;
-
+	public  Gaming game;
+	public AnimationCanvas board;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -402,9 +406,10 @@ public class ClientView extends javax.swing.JFrame {
 		if(jPanelCenter == null) {
 			jPanelCenter = new JPanel();
 			jPanelCenter.setSize(800, 600);
-			jPanelCenter.setBackground(new java.awt.Color(79,79,255));
+			jPanelCenter.setBackground( java.awt.Color.white);
 			jPanelCenter.setVisible(false);
 			jPanelCenter.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			
 		}
 		return jPanelCenter;
 	}
@@ -668,6 +673,10 @@ public class ClientView extends javax.swing.JFrame {
 					try{
 						game = new PlaneGame(jConnectNick.getText());					
 						game.join(jConnectNick.getText());
+						
+						jPanelCenter.add(getBoard());						
+						board.start();
+
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -675,6 +684,7 @@ public class ClientView extends javax.swing.JFrame {
 					//If the server was set up properly
 					jButtonPlayer1.setText(jConnectNick.getText());
 					jPanelCenter.setVisible(true);
+					
 					jPanelRight.setVisible(true);
 					jConnectDialog.dispose();
 				}
@@ -694,6 +704,14 @@ public class ClientView extends javax.swing.JFrame {
 		return jConnectButtonJoin;
 	}
 	
+	private AnimationCanvas getBoard(){
+		if( board == null){
+			board = new AnimationCanvas();			
+			board.setVisible(true);
+		}
+		return board;
+		
+	}
 	private AbstractAction getJoinServer() {
 		if(joinServer == null) {
 			joinServer = new AbstractAction("Join", null) {
@@ -705,21 +723,22 @@ public class ClientView extends javax.swing.JFrame {
 						String url = "rmi://"+ip+":"+Game.PORT+"/PlaneGame";
 						game = (Gaming)Naming.lookup(url);
 						game.join(jConnectNick.getText());
+						jButtonPlayer1.setText(jConnectNick.getText());
+						jPanelCenter.setVisible(true);
+						jPanelRight.setVisible(true);
+						jConnectDialog.dispose();
+						
+						setJMenuBar(jMenuBar1);
+						{
+							disconnect.setEnabled(true);
+							connect.setEnabled(false);
+						}
+					//TODO Draw game
 					}catch(Exception e){
 						e.printStackTrace();
 						
 					}
-					jButtonPlayer1.setText(jConnectNick.getText());
-					jPanelCenter.setVisible(true);
-					jPanelRight.setVisible(true);
-					jConnectDialog.dispose();
 					
-					setJMenuBar(jMenuBar1);
-					{
-						disconnect.setEnabled(true);
-						connect.setEnabled(false);
-					}
-					//TODO Draw game
 				}
 			};
 		}
@@ -746,14 +765,6 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return closeConnection;
 	}
-	
-	private JTextArea getJLog() {
-		if(jLog == null) {
-			jLog = new JTextArea();
-			jLog.setText("jLog");
-			jLog.setPreferredSize(new java.awt.Dimension(3, 18));
-		}
-		return jLog;
-	}
+
 
 }

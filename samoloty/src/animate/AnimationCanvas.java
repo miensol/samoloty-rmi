@@ -30,11 +30,11 @@ public class AnimationCanvas extends JLabel implements Runnable {
 
 	  int scaleDirection;
 
-	  AnimationCanvas() {
-	    setBackground(Color.green);
-	    setSize(450, 400);
+	  public AnimationCanvas() {
+	    setBackground(Color.blue);
+	    setSize(800, 600);
 
-	    image = getToolkit().getImage("E:\\Documents and Settings\\Piotr\\Moje dokumenty\\piotr\\Rok 3 semestr 2\\SR\\samoloty\\src\\proby\\samolocik.gif");
+	    image = getToolkit().getImage("E:\\Documents and Settings\\Piotr\\Moje dokumenty\\piotr\\Rok 3 semestr 2\\SR\\samoloty\\src\\animate\\samolocik.gif");
 
 	    MediaTracker mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
