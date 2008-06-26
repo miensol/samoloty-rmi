@@ -106,7 +106,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    at.setToIdentity();
 	    at.translate(x, y);
 	    at.rotate(Math.toRadians(rotate));
-	    at.scale(scale, scale);
+	    //at.scale(scale, scale);
 	    big.drawImage(image, at, this);
 
 	    Graphics2D g2D = (Graphics2D) g;

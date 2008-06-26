@@ -510,7 +510,7 @@ public class ClientView extends javax.swing.JFrame {
 		return jLabelPoints;
 	}
 
-	private JTextField getJTextField2() {
+	/*private JTextField getJTextField2() {
 		if(jTextField2 == null) {
 			jTextField2 = new JTextField();
 			jTextField2.setText("0");
@@ -524,7 +524,7 @@ public class ClientView extends javax.swing.JFrame {
 			jButton2.setText("Player1");
 		}
 		return jButton2;
-	}
+	}*/
 	
 	private JTextField getJTextPlayer2() {
 		if(jTextPlayer2 == null) {
