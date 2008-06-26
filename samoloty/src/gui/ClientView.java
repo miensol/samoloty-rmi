@@ -1,6 +1,7 @@
 package gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.beans.Visibility;
@@ -17,7 +18,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
@@ -49,6 +53,7 @@ import animate.AnimationCanvas;
 public class ClientView extends javax.swing.JFrame {
 	private JMenuBar jMenuBar1;
 	private JButton jConnectButtonCancle;
+	private JTextArea jTextArea1;
 	private JTextPane jTextPane1;
 	private AbstractAction createServer;
 	private JButton jButtonPlayer8;
@@ -66,6 +71,8 @@ public class ClientView extends javax.swing.JFrame {
 	private JButton jButtonPlayer2;
 	private JTextField jTextPlayer2;
 	private AbstractAction joinServer;
+	private JScrollPane jScrollPane1;
+	private ScrollPane scrollPane1;
 	private JButton jConnectButtonJoin;
 	private JLabel jLabelPoints;
 	private JLabel jLabelPlayers;
@@ -95,6 +102,7 @@ public class ClientView extends javax.swing.JFrame {
 	private JMenuItem connect;
 	private JMenu jGame;
 	private AbstractAction closeConnection;
+	
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -170,7 +178,7 @@ public class ClientView extends javax.swing.JFrame {
 				
 			}
 			pack();
-			this.setSize(953, 625);
+			this.setSize(957, 701);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -386,7 +394,6 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return quitGameWindow;
 	}
-	
 	public AnimationCanvas getaBoard() {
 		if(aBoard == null) {
 			aBoard = new AnimationCanvas();
@@ -395,7 +402,7 @@ public class ClientView extends javax.swing.JFrame {
 			aBoard.setVisible(false);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			aBoard.add(getJTextPane1());
-
+			aBoard.add(getJScrollPane1());
 		}
 		return aBoard;
 	}
@@ -739,15 +746,27 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return closeConnection;
 	}
-	
+	 
 	private JTextPane getJTextPane1() {
 		if(jTextPane1 == null) {
 			jTextPane1 = new JTextPane();
-			jTextPane1.setText("komunikaty");
-			jTextPane1.setBounds(3, 508, 793, 64);
+			jTextPane1.setText("komunikaty\n sadfasdf \n sadfasfasfasf \n asdfasdf \n asdasw234 \n 23423asftrt3");
+			jTextPane1.setBounds(3, 559, 793, 64);
 			jTextPane1.setEditable(false);
+			jTextPane1.setAutoscrolls(false);
+			JScrollPane scroll = new JScrollPane();
+			scroll.setViewportView(jTextPane1);
 		}
 		return jTextPane1;
+	}
+	
+	private JScrollPane getJScrollPane1() {
+		if(jScrollPane1 == null) {
+			jScrollPane1 = new JScrollPane();
+			jScrollPane1.setBounds(3, 586, 793, 38);
+			jScrollPane1.setViewportView(jTextPane1);
+		}
+		return jScrollPane1;
 	}
 
 }
