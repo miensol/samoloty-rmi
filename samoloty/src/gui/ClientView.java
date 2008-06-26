@@ -71,7 +71,6 @@ public class ClientView extends javax.swing.JFrame {
 	private JButton jButtonPlayer2;
 	private JTextField jTextPlayer2;
 	private AbstractAction joinServer;
-	private JScrollPane jScrollPane1;
 	private ScrollPane scrollPane1;
 	private JButton jConnectButtonJoin;
 	private JLabel jLabelPoints;
@@ -399,10 +398,8 @@ public class ClientView extends javax.swing.JFrame {
 			aBoard = new AnimationCanvas();
 			aBoard.setSize(800, 600);
 			aBoard.setBackground( java.awt.Color.white);
-			aBoard.setVisible(false);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-			aBoard.add(getJTextPane1());
-			aBoard.add(getJScrollPane1());
+			aBoard.setVisible(false);
 		}
 		return aBoard;
 	}
@@ -413,40 +410,41 @@ public class ClientView extends javax.swing.JFrame {
 			GroupLayout jPanelRightLayout = new GroupLayout((JComponent)jPanelRight);
 			jPanelRight.setLayout(jPanelRightLayout);
 			jPanelRight.setBackground(new java.awt.Color(170,159,157));
-			jPanelRight.setVisible(false);
 			jPanelRight.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			jPanelRight.setVisible(false);
 			jPanelRightLayout.setHorizontalGroup(jPanelRightLayout.createSequentialGroup()
-				.addGap(6)
 				.addGroup(jPanelRightLayout.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, jPanelRightLayout.createSequentialGroup()
-				        .addComponent(getJLabelPlayers(), GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
 				    .addGroup(jPanelRightLayout.createSequentialGroup()
-				        .addGap(0, 0, Short.MAX_VALUE)
-				        .addComponent(getJButtonPlayer8(), GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-				    .addComponent(getJButtonPlayer7(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer6(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer5(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer2(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer3(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJButtonPlayer4(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(16, 16, GroupLayout.PREFERRED_SIZE)
-				.addGroup(jPanelRightLayout.createParallelGroup()
-				    .addComponent(getJLabelPoints(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer8(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer7(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer6(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer5(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer2(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer3(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getJTextPlayer4(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-				.addContainerGap(37, 37));
+				        .addGroup(jPanelRightLayout.createParallelGroup()
+				            .addComponent(getJButtonPlayer8(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addGroup(GroupLayout.Alignment.LEADING, jPanelRightLayout.createSequentialGroup()
+				                .addComponent(getJLabelPlayers(), GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+				                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
+				            .addComponent(getJButtonPlayer7(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer6(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer5(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer2(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer3(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJButtonPlayer4(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+				        .addGap(16, 16, GroupLayout.PREFERRED_SIZE)
+				        .addGroup(jPanelRightLayout.createParallelGroup()
+				            .addComponent(getJLabelPoints(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer8(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer7(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer6(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer5(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer2(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer3(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(getJTextPlayer4(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+				        .addGap(29))
+				    .addComponent(getJTextPane1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
+				.addContainerGap());
 			jPanelRightLayout.setVerticalGroup(jPanelRightLayout.createSequentialGroup()
 				.addContainerGap(22, 22)
 				.addGroup(jPanelRightLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				    .addComponent(getJLabelPoints(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(getJLabelPoints(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				    .addComponent(getJLabelPlayers(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addGroup(jPanelRightLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -480,7 +478,9 @@ public class ClientView extends javax.swing.JFrame {
 				.addGroup(jPanelRightLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				    .addComponent(getJTextPlayer8(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 				    .addComponent(getJButtonPlayer8(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addContainerGap(191, 191));
+				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+				.addComponent(getJTextPane1(), GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
+				.addGap(6));
 		}
 		return jPanelRight;
 	}
@@ -751,22 +751,11 @@ public class ClientView extends javax.swing.JFrame {
 		if(jTextPane1 == null) {
 			jTextPane1 = new JTextPane();
 			jTextPane1.setText("komunikaty\n sadfasdf \n sadfasfasfasf \n asdfasdf \n asdasw234 \n 23423asftrt3");
-			jTextPane1.setBounds(3, 559, 793, 64);
+			jTextPane1.setBounds(668, 435, 128, 137);
 			jTextPane1.setEditable(false);
-			jTextPane1.setAutoscrolls(false);
-			JScrollPane scroll = new JScrollPane();
-			scroll.setViewportView(jTextPane1);
+			jTextPane1.setAutoscrolls(true);
 		}
 		return jTextPane1;
-	}
-	
-	private JScrollPane getJScrollPane1() {
-		if(jScrollPane1 == null) {
-			jScrollPane1 = new JScrollPane();
-			jScrollPane1.setBounds(3, 586, 793, 38);
-			jScrollPane1.setViewportView(jTextPane1);
-		}
-		return jScrollPane1;
 	}
 
 }
