@@ -1,15 +1,9 @@
 package gui;
-import game.Game;
-import game.PlaneGame;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.beans.Visibility;
-import java.rmi.AccessException;
-import java.rmi.Naming;
-import java.rmi.RemoteException;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -24,7 +18,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
@@ -37,13 +30,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingUtilities;
 
-import sun.security.action.GetBooleanAction;
-
 import animate.AnimationCanvas;
-
-import com.cloudgarden.jigloo.jiglooPlugin;
-
-import common.Gaming;
 
 
 
@@ -62,7 +49,6 @@ import common.Gaming;
 public class ClientView extends javax.swing.JFrame {
 	private JMenuBar jMenuBar1;
 	private JButton jConnectButtonCancle;
-	private JTextArea jLog;
 	private AbstractAction createServer;
 	private JButton jButtonPlayer8;
 	private JButton jButtonPlayer7;
@@ -85,7 +71,7 @@ public class ClientView extends javax.swing.JFrame {
 	private JTextField jTextPlayer1;
 	private JButton jButtonPlayer1;
 	private JPanel jPanelRight;
-	private JPanel jPanelCenter;
+	private AnimationCanvas aBoard;
 	private AbstractAction quitGameWindow;
 	private JMenuItem jAbout;
 	private AbstractAction openAboutDialog;
@@ -108,9 +94,7 @@ public class ClientView extends javax.swing.JFrame {
 	private JMenuItem connect;
 	private JMenu jGame;
 	private AbstractAction closeConnection;
-	
-	public  Gaming game;
-	public AnimationCanvas board;
+
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -135,10 +119,10 @@ public class ClientView extends javax.swing.JFrame {
 			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
 			getContentPane().setLayout(thisLayout);
 			thisLayout.setVerticalGroup(thisLayout.createParallelGroup()
-				.addComponent(getJPanelCenter(), GroupLayout.Alignment.LEADING, 0, 575, Short.MAX_VALUE)
+				.addComponent(getaBoard(), GroupLayout.Alignment.LEADING, 0, 575, Short.MAX_VALUE)
 				.addComponent(getJPanelRight(), GroupLayout.Alignment.LEADING, 0, 575, Short.MAX_VALUE));
 			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
-				.addComponent(getJPanelCenter(), GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE)
+				.addComponent(getaBoard(), GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE)
 				.addComponent(getJPanelRight(), 0, 148, Short.MAX_VALUE));
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setMaximumSize(new java.awt.Dimension(953, 625));
@@ -402,16 +386,16 @@ public class ClientView extends javax.swing.JFrame {
 		return quitGameWindow;
 	}
 	
-	public JPanel getJPanelCenter() {
-		if(jPanelCenter == null) {
-			jPanelCenter = new JPanel();
-			jPanelCenter.setSize(800, 600);
-			jPanelCenter.setBackground( java.awt.Color.white);
-			jPanelCenter.setVisible(false);
-			jPanelCenter.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-			
+	public AnimationCanvas getaBoard() {
+		if(aBoard == null) {
+			aBoard = new AnimationCanvas();
+			aBoard.setSize(800, 600);
+			aBoard.setBackground( java.awt.Color.white);
+			aBoard.setVisible(false);
+			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+
 		}
-		return jPanelCenter;
+		return aBoard;
 	}
 	
 	public JPanel getJPanelRight() {
@@ -524,7 +508,24 @@ public class ClientView extends javax.swing.JFrame {
 			jLabelPoints.setText("Points");
 		}
 		return jLabelPoints;
-	}	
+	}
+
+	private JTextField getJTextField2() {
+		if(jTextField2 == null) {
+			jTextField2 = new JTextField();
+			jTextField2.setText("0");
+		}
+		return jTextField2;
+	}
+	
+	private JButton getJButton2() {
+		if(jButton2 == null) {
+			jButton2 = new JButton();
+			jButton2.setText("Player1");
+		}
+		return jButton2;
+	}
+	
 	private JTextField getJTextPlayer2() {
 		if(jTextPlayer2 == null) {
 			jTextPlayer2 = new JTextField();
@@ -670,21 +671,9 @@ public class ClientView extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 								
 					//TODO Create server
-					try{
-						game = new PlaneGame(jConnectNick.getText());					
-						game.join(jConnectNick.getText());
-						
-						jPanelCenter.add(getBoard());						
-						board.start();
-
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					
 					//If the server was set up properly
 					jButtonPlayer1.setText(jConnectNick.getText());
-					jPanelCenter.setVisible(true);
-					
+					aBoard.setVisible(true);
 					jPanelRight.setVisible(true);
 					jConnectDialog.dispose();
 				}
@@ -704,41 +693,24 @@ public class ClientView extends javax.swing.JFrame {
 		return jConnectButtonJoin;
 	}
 	
-	private AnimationCanvas getBoard(){
-		if( board == null){
-			board = new AnimationCanvas();			
-			board.setVisible(true);
-		}
-		return board;
-		
-	}
 	private AbstractAction getJoinServer() {
 		if(joinServer == null) {
 			joinServer = new AbstractAction("Join", null) {
 				public void actionPerformed(ActionEvent evt) {
 					
 					//If connection to server succeed
-					try{
-						String ip = jConnectGame.getText();
-						String url = "rmi://"+ip+":"+Game.PORT+"/PlaneGame";
-						game = (Gaming)Naming.lookup(url);
-						game.join(jConnectNick.getText());
-						jButtonPlayer1.setText(jConnectNick.getText());
-						jPanelCenter.setVisible(true);
-						jPanelRight.setVisible(true);
-						jConnectDialog.dispose();
-						
-						setJMenuBar(jMenuBar1);
-						{
-							disconnect.setEnabled(true);
-							connect.setEnabled(false);
-						}
-					//TODO Draw game
-					}catch(Exception e){
-						e.printStackTrace();
-						
-					}
 					
+					jButtonPlayer1.setText(jConnectNick.getText());
+					aBoard.setVisible(true);
+					jPanelRight.setVisible(true);
+					jConnectDialog.dispose();
+					
+					setJMenuBar(jMenuBar1);
+					{
+						disconnect.setEnabled(true);
+						connect.setEnabled(false);
+					}
+					//TODO Draw game
 				}
 			};
 		}
@@ -753,7 +725,7 @@ public class ClientView extends javax.swing.JFrame {
 					
 					//TODO disconnect from server
 					
-					jPanelCenter.setVisible(false);
+					aBoard.setVisible(false);
 					jPanelRight.setVisible(false);
 					setJMenuBar(jMenuBar1);
 					{
@@ -765,6 +737,5 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return closeConnection;
 	}
-
 
 }
