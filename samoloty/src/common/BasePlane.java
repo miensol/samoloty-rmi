@@ -103,14 +103,15 @@ public class BasePlane extends Movable<Short> implements Piloting {
 
 	@Override
 	public void turnRight(Float angle) throws RemoteException {
-		if( angle < 0 && Math.abs(angle)>Math.PI)
+		/*if( angle < 0 && Math.abs(angle)>Math.PI)
 			throw new RemoteException("Blad turnRight: Kat powinien byc dodatni i mniejszy od PI");
 
 		this.angle += angle;
 		// sets angle between 0 and 2PI
 		if (this.angle >  Math.PI)
 			this.angle = (float)Math.PI * 2 - this.angle;
-		normalizeSpeed();
+		normalizeSpeed();*/
+		turnLeft(-angle);
 	}
 
 	@Override
@@ -118,7 +119,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		if( angle < 0 && Math.abs(angle)>Math.PI)
 			throw new RemoteException("Blad turnLeft: Kat powinien byc dodatni i mniejszy od PI");
 		this.angle -= angle;
-		System.out.println("Skercam w lewo");
+		//System.out.println("Skercam w lewo");
 		// sets angle between 0 and 2PI
 		if (this.angle < -Math.PI)
 			this.angle =  (float)Math.PI * 2 + this.angle;

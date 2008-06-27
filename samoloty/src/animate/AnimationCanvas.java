@@ -37,7 +37,8 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  double scale;
 
 	  int UP = 0;
-
+	  int width = 10;
+	  int height = 10;
 	  int DOWN = 1;
 	  URL url;
 	  int scaleDirection;
@@ -49,7 +50,8 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    setSize(800, 600);
 	    url = getClass().getResource("samolocik.gif");
 	    image = getToolkit().getImage(url);
-
+	    
+	    
 	    mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
 
@@ -66,7 +68,8 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	      System.out.println("No gif file");
 	      System.exit(0);
 	    }
-
+	    width = image.getWidth(this)/2;
+	    height = image.getHeight(this)/2;
 	    rotate = (int) 0;
 	    scale = Math.random() * 1.5;
 	    scaleDirection = DOWN;
@@ -129,9 +132,10 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    		//rotate = plane.getAngle();
 	    	
 	    	AffineTransform at = new AffineTransform();
-	    	at.setToIdentity();
-	    	at.translate(x, y);
+	    //	at.setToIdentity();	    	
+	    	at.translate(x , y );
 	    	at.rotate(plane.getAngle());
+	    	
 	    //at.scale(scale, scale);
 	    
 	    	big.drawImage(image, at, this);
