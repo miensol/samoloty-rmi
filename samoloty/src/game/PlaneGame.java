@@ -74,6 +74,7 @@ public class PlaneGame extends Game implements Gaming,
 			throw new RemoteException("Gra zostala juz rozpoczeta");
 		this.stopped = false;
 		this.actions = new Thread(this);
+		this.actions.setPriority(Thread.MIN_PRIORITY);
 		this.actions.start();
 		System.out.println("Game started");
 		
@@ -179,7 +180,7 @@ public class PlaneGame extends Game implements Gaming,
 		System.out.println("Player " + nick + " joined the game!");
 		Piloting plane = newPlayer.getPlane();
 		plane.setX((short)100);
-		plane.setY((short)((getPlayerCount()-1)*80));
+		plane.setY((short)((getPlayerCount())*200));
 		plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));
 		plane.setSpeedY((short)0);
 		plane.setAngle(0F);
@@ -195,7 +196,7 @@ public class PlaneGame extends Game implements Gaming,
 	public void moveAll() throws RemoteException {
 		//System.out.println("Jestem w moveAll!");
 		for(Map.Entry<String, Playing> k : this ){
-			System.out.println("Ruszam gracza : " + k.getKey());
+			//System.out.println("Ruszam gracza : " + k.getKey());
 			BasePlane plane = (BasePlane)k.getValue().getPlane();
 			plane.move();
 			checkHit(plane);
@@ -237,7 +238,7 @@ public class PlaneGame extends Game implements Gaming,
 		try{
 			
 			do{
-				Thread.sleep(500);
+				Thread.sleep(100);
 				this.moveAll();
 			}while(!this.stopped);
 			
@@ -250,7 +251,7 @@ public class PlaneGame extends Game implements Gaming,
 		
 		
 	}
-	public Map<String,Playing> getPlayers() throws RemoteException{
+	public synchronized Map<String,Playing> getPlayers() throws RemoteException{
 		return this.players;
 	}
 	/**
@@ -273,26 +274,27 @@ public class PlaneGame extends Game implements Gaming,
 		Playing player = this.getPlayer(nick);
 		player.setLastSeen(new Date());
 		Piloting plane = player.getPlane();
-		//System.out.println("Gracz "+nick+" wcisnal klaiwsz!");
-		switch(e.getKeyCode()){			
-			case KeyEvent.VK_A :
-				plane.turnLeft((float)Math.PI/6F);
+		//System.out.println("Gracz "+nick+" wcisnal klaiwsz "+e.paramString());
+		switch(e.getKeyChar()){			
+			case 'a':
+				plane.turnLeft((float)Math.PI/12F);
 				break;
-			case KeyEvent.VK_D :
-				plane.turnRight((float)Math.PI/6F);
+			case 'd':
+				plane.turnRight((float)Math.PI/12F);
 				break;
 				
-			case KeyEvent.VK_W :
+			case 'w':
 				plane.speedUp();
 				break;
-			case KeyEvent.VK_S:
+			case 's':
 				plane.speedDown();
 				break;
 			case KeyEvent.VK_ENTER:
+				//System.out.println("Wcisniety enter");
 				if(nick == this.nick)
 					this.start();
 				break;
-			case KeyEvent.VK_Q:
+			case 'q':
 				if(nick == this.nick)
 					this.stop();
 				break;
@@ -305,7 +307,7 @@ public class PlaneGame extends Game implements Gaming,
 		
 		}
 	}
-	public Vector<BaseWeapon> getBullets() throws RemoteException {
+	public synchronized Vector<BaseWeapon> getBullets() throws RemoteException {
 		return this.bullets;
 	}
 }

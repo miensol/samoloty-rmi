@@ -10,21 +10,26 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 
 import common.Gaming;
+import common.Piloting;
 import common.Playing;
 
 public class AnimationCanvas extends JLabel implements Runnable {
 	  Thread thread;
 
 	  Image image;
-	  Image image2;
-
+	  
+	  Vector<String>imagesOwners;
+	   
 	  BufferedImage bi;
 	  public Map<String,Playing> players;
+	  public Map<String,Piloting> planes;
 	  double x, y, xi, yi;
 
 	  int rotate;
@@ -34,7 +39,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  int UP = 0;
 
 	  int DOWN = 1;
-
+	  URL url;
 	  int scaleDirection;
 	  public MediaTracker mt;
 	  public Gaming game;
@@ -42,13 +47,15 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public AnimationCanvas() {
 	    setBackground(Color.blue);
 	    setSize(800, 600);
-	    URL url = getClass().getResource("samolocik.gif");
+	    url = getClass().getResource("samolocik.gif");
 	    image = getToolkit().getImage(url);
-	    image2 = getToolkit().getImage(url);
+
 	    mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
-	    mt.addImage(image2, 2);
-	    
+
+
+	    imagesOwners = new Vector<String>();
+
 	    try {
 	      mt.waitForAll();
 	    } catch (Exception e) {
@@ -60,7 +67,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	      System.exit(0);
 	    }
 
-	    rotate = (int) (Math.random() * 360);
+	    rotate = (int) 0;
 	    scale = Math.random() * 1.5;
 	    scaleDirection = DOWN;
 
@@ -108,25 +115,35 @@ public class AnimationCanvas extends JLabel implements Runnable {
 
 	  public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    Dimension d = getSize();
-
-	    bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D big = bi.createGraphics();
-	    System.out.println("Wymair d = "+d.getHeight()+ "x"+ d.getWidth());
-	    step(d.width, d.height);
-
-	    AffineTransform at = new AffineTransform();
-	    at.setToIdentity();
-	    at.translate(x, y);
-	    at.rotate(Math.toRadians(rotate));
+	    Dimension d = new Dimension(800,600);
+	    //System.out.println("Wymair d = "+d.getHeight()+ "x"+ d.getWidth());
+	    for(String s:imagesOwners){
+	    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+	    	Graphics2D big = bi.createGraphics();
+	    	//System.out.println("Rysuje gracza "+s);
+	    	//step(d.width, d.height);
+	    	try{
+	    		Piloting plane = planes.get(s);
+	    		x = plane.getX();
+	    		y = plane.getY();
+	    		//rotate = plane.getAngle();
+	    	
+	    	AffineTransform at = new AffineTransform();
+	    	at.setToIdentity();
+	    	at.translate(x, y);
+	    	at.rotate(plane.getAngle());
 	    //at.scale(scale, scale);
 	    
-	    big.drawImage(image, at, this);
+	    	big.drawImage(image, at, this);
 
-	    Graphics2D g2D = (Graphics2D) g;
-	    g2D.drawImage(bi, 0, 0, null);
+	    	Graphics2D g2D = (Graphics2D) g;
+	    	g2D.drawImage(bi, 0, 0, null);
+	    	}catch(RemoteException e){
+	    		e.printStackTrace();
+	    	}
 
-	    big.dispose();
+	    	big.dispose();
+	    }
 	  }
 
 	  public void start() {
@@ -144,17 +161,28 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public void run() {
 	    Thread me = Thread.currentThread();
 	    while (thread == me) {
-	    	/*
-	    try{
-	      if(!this.game.isWaitForPlayers() && this.players == null){
-	    	  this.players = this.game.getPlayers();
-	      }
-	    }catch(RemoteException e){
-	    	e.printStackTrace();
-	    }
-	    */
-	      repaint();
+	    	addImages();	
+	    	repaint();
+	    	try{
+	    		Thread.sleep(20);	    		
+	    	}catch(InterruptedException e){
+	    		e.printStackTrace();
+	    	}
 	    }
 	    thread = null;
+	  }
+	  public void addImages(){
+		  try{
+			  if(imagesOwners.size()==0 && !this.game.isWaitForPlayers() ){
+				  players = game.getPlayers();
+				  planes = new HashMap<String, Piloting>();
+				  for(Map.Entry<String, Playing> el:players.entrySet()){
+					  imagesOwners.add(el.getKey());		
+					  planes.put(el.getKey(), el.getValue().getPlane());
+				  }
+			  }
+		  }catch(RemoteException e){
+			  e.printStackTrace();
+		  }
 	  }
 }

@@ -701,6 +701,7 @@ public class ClientView extends javax.swing.JFrame {
 						game.join(myNick);
 						toLog("Utworzylem serwer!");
 						aBoard.setGame(gaming);
+						aBoard.start();
 						addKeyListner();
 					}catch(RemoteException e){
 						toLog(e.getMessage());
@@ -781,6 +782,8 @@ public class ClientView extends javax.swing.JFrame {
 						gaming = (Gaming)Naming.lookup(url);
 						if(gaming.isWaitForPlayers()){
 							gaming.join(myNick);
+							aBoard.setGame(gaming);
+							aBoard.start();
 							addKeyListner();
 						} else
 							toLog("Musisz wybrac inny nick!");
