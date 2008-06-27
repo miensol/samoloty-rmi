@@ -20,7 +20,7 @@ public class Player extends APlayer<Integer> implements Playing, Serializable {
 	public Player(String nick, PlaneGame game) throws RemoteException {
 		super(nick);
 		this.plane = new BasePlane(nick);
-
+		this.score = 0;
 	}
 
 	public Piloting getPlane() throws RemoteException {
@@ -46,5 +46,10 @@ public class Player extends APlayer<Integer> implements Playing, Serializable {
 
 		return super.equals(obj);
 
+	}
+	@Override
+	public void setScore(Integer s) throws RemoteException {
+		// TODO Auto-generated method stub
+		this.score = s;
 	}
 }

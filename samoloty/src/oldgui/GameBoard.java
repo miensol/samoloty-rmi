@@ -23,8 +23,8 @@ import common.Playing;
  *
  */
 public class GameBoard extends Canvas implements Runnable {
-	public static final int width= 600;
-	public static final int height = 800;
+	public static final int width= 800;
+	public static final int height = 600;
 	protected Thread t;
 	private Composite composite;
 	private boolean stopped = false;

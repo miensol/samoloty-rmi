@@ -4,6 +4,7 @@
 package game;
 
 import java.awt.Event;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -201,11 +202,12 @@ public class PlaneGame extends Game implements Gaming,
 			plane.move();
 			checkHit(plane);
 		}
-		for(BaseWeapon b:this.bullets){
+		for(int i=0;i<bullets.size();++i){
+			BaseWeapon b= bullets.get(i);
 			b.move();
 			if( b.getX()<0 || b.getX()>GameBoard.width 
 					|| b.getY()<0 || b.getY()>GameBoard.height )
-				this.bullets.remove(b);			  
+				this.bullets.remove(i);			  
 		}
 		
 	}
@@ -213,18 +215,19 @@ public class PlaneGame extends Game implements Gaming,
 	 * checks hits adds score
 	 */
 	public void checkHit(BasePlane plane){
-		for(BaseWeapon b:this.bullets){
+		for(int i =0;i<this.bullets.size();++i){
+			BaseWeapon b = this.bullets.get(i);
 			try{
 				if(!b.getShooterNick().equals(plane.getPilotName())
-						&& b.distance(plane)<10){
-					Player shooter = (Player)getPlayer(b.getShooterNick());
+						&& b.distance(plane)<30){
+					Playing shooter = getPlayer(b.getShooterNick());
 					shooter.setScore(shooter.getScore() + 1);
 					plane.setX((short)0);
 					plane.setY((short)200);
 					plane.setAngle(0F);
 					plane.setSpeedY((short)0);
 					plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));
-					this.bullets.remove(b);
+					this.bullets.remove(i);
 				}
 			}catch(RemoteException e){
 				System.err.println("checkHit error!!");
@@ -238,7 +241,7 @@ public class PlaneGame extends Game implements Gaming,
 		try{
 			
 			do{
-				Thread.sleep(100);
+				Thread.sleep(50);
 				this.moveAll();
 			}while(!this.stopped);
 			
@@ -299,8 +302,10 @@ public class PlaneGame extends Game implements Gaming,
 					this.stop();
 				break;
 			case KeyEvent.VK_SPACE:
-				if( (plane.getLastShoot().getTime()-(new Date()).getTime()) > 2000 ){
+				//System.out.println("Strzelil gracz "+nick);
+				if( ((new Date()).getTime() - plane.getLastShoot().getTime()) > 2000 ){
 					BaseWeapon nb = new BaseWeapon(plane);
+					plane.setLastShoot(new Date());
 					this.bullets.add(nb);
 				}
 				break;
@@ -309,5 +314,13 @@ public class PlaneGame extends Game implements Gaming,
 	}
 	public synchronized Vector<BaseWeapon> getBullets() throws RemoteException {
 		return this.bullets;
+	}
+	
+	public synchronized Vector<Point> getBulletsCoords() throws RemoteException{
+		Vector<Point> vp = new Vector<Point>();
+		for(BaseWeapon b:this.bullets){
+			vp.add(new Point(b.getX(),b.getY()));
+		}
+		return vp;
 	}
 }

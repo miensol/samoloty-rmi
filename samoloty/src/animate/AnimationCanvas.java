@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -24,9 +25,9 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  Thread thread;
 
 	  Image image;
-	  
+	  Image bullet ;
 	  Vector<String>imagesOwners;
-	   
+	  public int errorCount = 0;
 	  BufferedImage bi;
 	  public Map<String,Playing> players;
 	  public Map<String,Piloting> planes;
@@ -50,11 +51,12 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    setSize(800, 600);
 	    url = getClass().getResource("samolocik.gif");
 	    image = getToolkit().getImage(url);
-	    
+	    url = getClass().getResource("bullet.gif");
+	    bullet = getToolkit().getImage(url);
 	    
 	    mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
-
+	    mt.addImage(bullet, 2);
 
 	    imagesOwners = new Vector<String>();
 
@@ -144,9 +146,44 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	g2D.drawImage(bi, 0, 0, null);
 	    	}catch(RemoteException e){
 	    		e.printStackTrace();
+	    		++errorCount;
+		    	if(errorCount > 5)
+		    		this.stop();
+
 	    	}
 
 	    	big.dispose();
+	    }
+	    Vector<Point> vb = null;
+	    try{
+	    	vb = game.getBulletsCoords();
+	    }catch(RemoteException e){
+	    	e.printStackTrace();
+	    	++errorCount;
+	    	if(errorCount > 5)
+	    		this.stop();
+	    }
+	    if(vb!=null){
+		    for(Point p:vb){
+		    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+		    	Graphics2D big = bi.createGraphics();
+		    	//System.out.println("Rysuje gracza "+s);
+		    	//step(d.width, d.height);
+		    	x  = p.x;
+		    	y  = p.y;
+		    	AffineTransform at = new AffineTransform();
+	    	
+		    	at.translate(x , y );    	
+		   
+		    	big.drawImage(bullet, at, this);
+
+		    	Graphics2D g2D = (Graphics2D) g;
+		    	g2D.drawImage(bi, 0, 0, null);
+		    	
+
+		    	big.dispose();
+		   		    	
+		    }
 	    }
 	  }
 
@@ -168,7 +205,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	addImages();	
 	    	repaint();
 	    	try{
-	    		Thread.sleep(20);	    		
+	    		Thread.sleep(50);	    		
 	    	}catch(InterruptedException e){
 	    		e.printStackTrace();
 	    	}

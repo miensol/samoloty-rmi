@@ -20,7 +20,7 @@ public interface Playing extends Remote {
 
 	// this method isn't pretty written here
 	Integer getScore() throws RemoteException;
-
+	void setScore(Integer s) throws RemoteException;
 	Piloting getPlane() throws RemoteException;
 	public Date getLastSeen() throws RemoteException;
 	public void setLastSeen(Date d) throws RemoteException;
