@@ -115,12 +115,12 @@ public class ClientView extends javax.swing.JFrame {
 	private JMenuItem disconnect;
 	private JMenuItem connect;
 	private JMenu jGame;
-	private AbstractAction closeConnection;
-	
+	private AbstractAction closeConnection;	
 	private PlaneGame game;
 	private Gaming gaming;
 	private String myNick ;
 	private JButton[] players;
+	private JTextField[] scores;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -138,8 +138,27 @@ public class ClientView extends javax.swing.JFrame {
 	public ClientView() {
 		super();
 		initGUI();
+		//fields with nicknames 
 		players = new JButton[8];
-		// cala reszta
+		players[0]=jButtonPlayer1;
+		players[1]=jButtonPlayer2;
+		players[2]=jButtonPlayer3;
+		players[3]=jButtonPlayer4;
+		players[4]=jButtonPlayer5;
+		players[5]=jButtonPlayer6;
+		players[6]=jButtonPlayer7;
+		players[7]=jButtonPlayer8;
+		
+		//fields with points
+		scores = new JTextField[8];
+		scores[0]=jTextPlayer1;
+		scores[1]=jTextPlayer2;
+		scores[2]=jTextPlayer3;
+		scores[3]=jTextPlayer4;
+		scores[4]=jTextPlayer5;
+		scores[5]=jTextPlayer6;
+		scores[6]=jTextPlayer7;
+		scores[7]=jTextPlayer8;
 	}
 	
 	private void initGUI() {
@@ -561,6 +580,7 @@ public class ClientView extends javax.swing.JFrame {
 		return jButton2;
 	}*/
 	
+	
 	private JTextField getJTextPlayer2() {
 		if(jTextPlayer2 == null) {
 			jTextPlayer2 = new JTextField();
@@ -580,7 +600,6 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return jButtonPlayer2;
 	}
-	
 	private JTextField getJTextPlayer3() {
 		if(jTextPlayer3 == null) {
 			jTextPlayer3 = new JTextField();
@@ -699,6 +718,10 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return jButtonPlayer8;
 	}
+	
+	
+	
+	//private JTextField Scores[];
 	
 	private AbstractAction getCreateServer() {
 		if(createServer == null) {
@@ -859,7 +882,8 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return closeConnection;
 	}
-	 
+
+		
 	private JTextPane getJTextPane1() {
 		if(jTextPane1 == null) {
 			jTextPane1 = new JTextPane();
@@ -870,5 +894,7 @@ public class ClientView extends javax.swing.JFrame {
 		}
 		return jTextPane1;
 	}
+	
+
 
 }
