@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.Visibility;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -151,6 +153,12 @@ public class ClientView extends javax.swing.JFrame {
 			this.setMinimumSize(new java.awt.Dimension(953, 625));
 			this.setResizable(false);
 			this.setTitle("Planes");
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					//System.out.println("this.windowClosing, event="+evt);
+					System.exit(0);
+				}
+			});
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
@@ -722,40 +730,39 @@ public class ClientView extends javax.swing.JFrame {
 		
 	}
 	private void addKeyListner(){
-		this.addKeyListener(
-				new KeyListener() {
-					//@Override
-					public void keyPressed(KeyEvent e) {
-						/*try{
-						gaming.sendEvent(myNick, e);
-						}catch(RemoteException ex){
-							toLog("Blad wciskanego przycisku ");
-							ex.printStackTrace();
-						}*/						
-					}
-					//@Override
-					public void keyReleased(KeyEvent e) {
-						// TODO Auto-generated method stub
-						/*
-						try{
-							gaming.sendEvent(myNick, e);
-							}catch(RemoteException ex){
-								toLog("Blad puszczanego przycisku ");
-								ex.printStackTrace();
-							}
-							*/						
-					}
-					//@Override
-					public void keyTyped(KeyEvent e) {
-						// TODO Auto-generated method stub
-						try{
-							gaming.sendEvent(myNick, e);
-							}catch(RemoteException ex){
-								toLog("Blad typed przycisku ");
-								ex.printStackTrace();
-							}						
-					}
+		this.addKeyListener(new KeyAdapter() {
+			//@Override
+			public void keyPressed(KeyEvent e) {
+				/*try{
+					gaming.sendEvent(myNick, e);
+				}catch(RemoteException ex){
+					toLog("Blad wciskanego przycisku ");
+					ex.printStackTrace();
+				}*/						
+			}
+			//@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				/*
+				try{
+					gaming.sendEvent(myNick, e);
+				}catch(RemoteException ex){
+					toLog("Blad puszczanego przycisku ");
+					ex.printStackTrace();
 				}
+				*/						
+			}
+			//@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				try{
+					gaming.sendEvent(myNick, e);
+				}catch(RemoteException ex){
+					toLog("Blad typed przycisku ");
+					ex.printStackTrace();
+				}						
+			}
+		}
 		);		
 	}
 	private JButton getJConnectButtonJoin() {
