@@ -15,7 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import common.Gaming;
 import common.Piloting;
@@ -23,7 +25,8 @@ import common.Playing;
 
 public class AnimationCanvas extends JLabel implements Runnable {
 	  Thread thread;
-
+	  private JButton[] playersB;
+		private JTextField[] scores;
 	  Image image;
 	  Image bullet ;
 	  Vector<String>imagesOwners;
@@ -83,39 +86,11 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public void setGame(Gaming game){
 		  this.game = game;
 	  }
-	  public void step(int w, int h) {
-	    x += xi;
-	    y += yi;
-
-	    if (x > w) {
-	      x = w - 1;
-	      xi = Math.random() * -w / 32;
-	    }
-	    if (x < 0) {
-	      x = 2;
-	      xi = Math.random() * w / 32;
-	    }
-	    if (y > h) {
-	      y = h - 2;
-	      yi = Math.random() * -h / 32;
-	    }
-	    if (y < 0) {
-	      y = 2;
-	      yi = Math.random() * h / 32;
-	    }
-
-	    if ((rotate += 5) == 360) {
-	      rotate = 0;
-	    }
-	    if (scaleDirection == UP) {
-	      if ((scale += 0.5) > 1.5) {
-	        scaleDirection = DOWN;
-	      }
-	    } else if (scaleDirection == DOWN) {
-	      if ((scale -= .05) < 0.5) {
-	        scaleDirection = UP;
-	      }
-	    }
+	  public void setPlayersB(JButton[] pl){
+		  this.playersB = pl;
+	  }
+	  public void setScores(JTextField[] sc){
+		  this.scores = sc;
 	  }
 
 	  public void paintComponent(Graphics g) {
@@ -126,7 +101,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 	    	Graphics2D big = bi.createGraphics();
 	    	//System.out.println("Rysuje gracza "+s);
-	    	//step(d.width, d.height);
+	    	
 	    	try{
 	    		Piloting plane = planes.get(s);
 	    		x = plane.getX();
@@ -134,10 +109,11 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    		//rotate = plane.getAngle();
 	    	
 	    	AffineTransform at = new AffineTransform();
-	    //	at.setToIdentity();	    	
+	    //	at.setToIdentity();	  
+	    	
 	    	at.translate(x , y );
 	    	at.rotate(plane.getAngle());
-	    	
+	    	at.translate(-26, -30);
 	    //at.scale(scale, scale);
 	    
 	    	big.drawImage(image, at, this);

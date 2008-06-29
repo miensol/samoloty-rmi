@@ -445,6 +445,8 @@ public class ClientView extends javax.swing.JFrame {
 			aBoard.setBackground( java.awt.Color.white);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			aBoard.setVisible(false);
+			aBoard.setScores(scores);
+			aBoard.setPlayersB(players);
 		}
 		return aBoard;
 	}
