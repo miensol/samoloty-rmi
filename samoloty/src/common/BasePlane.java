@@ -58,7 +58,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	 * 
 	 * @see core.Moving#move()
 	 */
-	@Override
+	
 	public void move() throws RemoteException {
 		//System.out.println("Player " + this.pilotName + " moved");
 		this.x += this.speedX;
@@ -101,7 +101,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		return maxSpeed;
 	}
 
-	@Override
+	
 	public void turnRight(Float angle) throws RemoteException {
 		/*if( angle < 0 && Math.abs(angle)>Math.PI)
 			throw new RemoteException("Blad turnRight: Kat powinien byc dodatni i mniejszy od PI");
@@ -114,7 +114,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		turnLeft(-angle);
 	}
 
-	@Override
+	
 	public void turnLeft(Float angle) throws RemoteException {
 		if( angle < 0 && Math.abs(angle)>Math.PI)
 			throw new RemoteException("Blad turnLeft: Kat powinien byc dodatni i mniejszy od PI");
@@ -126,7 +126,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 		normalizeSpeed();
 	}
 
-	@Override
+	
 	/**
 	 * Turns left 90 degrees
 	 */
@@ -137,7 +137,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	/**
 	 * Turn right 90 degrees
 	 */
-	@Override
+	
 	public void turnRight() throws RemoteException {
 		this.turnRight((float) Math.PI * 0.5F);
 	}

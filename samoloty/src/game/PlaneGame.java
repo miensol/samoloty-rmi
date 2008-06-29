@@ -61,13 +61,13 @@ public class PlaneGame extends Game implements Gaming,
 		this.bullets = new Vector<BaseWeapon>();
 	}
 
-	@Override
+	
 	public Iterator<Entry<String, Playing>> iterator() {
 		return this.players.entrySet().iterator();
 	}
 	
 
-	@Override
+	
 	public void start() throws RemoteException {
 		// TODO Auto-generated method stub
 		this.waitForPlayers = false;
@@ -82,7 +82,7 @@ public class PlaneGame extends Game implements Gaming,
 		
 	}
 
-	@Override
+	
 	public void stop() throws RemoteException {
 		// TODO Auto-generated method stub
 		this.stopped = true;
@@ -92,7 +92,7 @@ public class PlaneGame extends Game implements Gaming,
 		this.waitForPlayers = true;
 	}
 
-	@Override
+
 	public Gaming getGame(String url) throws RemoteException {
 		// TODO Auto-generated method stub
 		return this;
@@ -101,7 +101,7 @@ public class PlaneGame extends Game implements Gaming,
 	/**
 	 * Returns Player if player with nick exists otherwise null
 	 */
-	@Override
+	
 	public Playing getPlayer(String nick) throws RemoteException {
 		return this.players.get(nick);
 	}
@@ -160,11 +160,12 @@ public class PlaneGame extends Game implements Gaming,
 			e.printStackTrace();
 		}
 	}
-	@Override
+	
 	public int getPlayerCount() throws RemoteException {
 		return this.players.size();
 	}
-	@Override
+
+
 	public Playing join(String nick) throws RemoteException {
 		if (nick == null || this.players.containsKey(nick))
 			throw new RemoteException("Player with nick " + nick
@@ -236,7 +237,7 @@ public class PlaneGame extends Game implements Gaming,
 		}
 	}
 	
-	@Override
+	
 	public void run() {
 		try{
 			
@@ -271,7 +272,7 @@ public class PlaneGame extends Game implements Gaming,
 		return waitForPlayers;
 	}
 	
-	@Override
+	
 	public synchronized void sendEvent(String nick, KeyEvent e) throws RemoteException {
 		// TODO Auto-generated method stub
 		Playing player = this.getPlayer(nick);
