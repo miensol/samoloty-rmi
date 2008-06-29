@@ -23,8 +23,9 @@ public class BaseWeapon extends Movable<Short> implements Serializable{
 	public BaseWeapon(Piloting p) throws RemoteException {
 		super(p.getX(), p.getY(), (short)(p.getSpeedX()*2), (short)(p.getSpeedY()*2));
 		double r = Math.sqrt(60*60 + 25*25);
-		short x = (short)Math.round(Math.cos(p.getAngle()));
-		short y = (short)Math.round(Math.sin(p.getAngle()));
+		short x = (short)(Math.round(Math.cos(p.getAngle()))*r);
+		short y = (short)(Math.round(Math.sin(p.getAngle()))*r);
+		System.err.println("x'="+x+" y'=" +y +" kat="+p.getAngle() );
 		this.setX((short)(getX() + x));
 		this.setY((short)(getY() + y));
 		this.shooterNick = p.getPilotName();
