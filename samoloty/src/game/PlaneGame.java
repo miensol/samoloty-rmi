@@ -90,6 +90,7 @@ public class PlaneGame extends Game implements Gaming,
 		//this.unbindAll();
 		System.out.println("Game stopped");
 		this.waitForPlayers = true;
+		this.actions = null;
 	}
 
 
