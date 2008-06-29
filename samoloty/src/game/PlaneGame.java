@@ -224,8 +224,8 @@ public class PlaneGame extends Game implements Gaming,
 						&& b.distance(plane)<30){
 					Playing shooter = getPlayer(b.getShooterNick());
 					shooter.setScore(shooter.getScore() + 1);
-					plane.setX((short)0);
-					plane.setY((short)200);
+					plane.setX((short)(Math.round(Math.random()*800)));
+					plane.setY((short)((Math.round(Math.random()*600))));
 					plane.setAngle(0F);
 					plane.setSpeedY((short)0);
 					plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));

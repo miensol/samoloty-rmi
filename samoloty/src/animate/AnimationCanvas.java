@@ -35,7 +35,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public Map<String,Playing> players;
 	  public Map<String,Piloting> planes;
 	  double x, y, xi, yi;
-
+	  Dimension d;
 	  int rotate;
 
 	  double scale;
@@ -60,7 +60,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
 	    mt.addImage(bullet, 2);
-
+	    d  = new Dimension(800,600);
 	    imagesOwners = new Vector<String>();
 
 	    try {
@@ -95,19 +95,24 @@ public class AnimationCanvas extends JLabel implements Runnable {
 
 	  public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    Dimension d = new Dimension(800,600);
+	     
 	    //System.out.println("Wymair d = "+d.getHeight()+ "x"+ d.getWidth());
-	    for(String s:imagesOwners){
+	    int index = 0;
+	    for(index = 0;index<imagesOwners.size();++index){
+	    	if(imagesOwners.get(index) == null)
+	    		continue;
+	    	String nick = imagesOwners.get(index);
 	    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 	    	Graphics2D big = bi.createGraphics();
 	    	//System.out.println("Rysuje gracza "+s);
 	    	
 	    	try{
-	    		Piloting plane = planes.get(s);
+	    		Piloting plane = planes.get(nick);
 	    		x = plane.getX();
 	    		y = plane.getY();
 	    		//rotate = plane.getAngle();
-	    	
+	    		Integer score = players.get(nick).getScore();
+	    	scores[index].setText(score.toString());
 	    	AffineTransform at = new AffineTransform();
 	    //	at.setToIdentity();	  
 	    	
@@ -120,11 +125,13 @@ public class AnimationCanvas extends JLabel implements Runnable {
 
 	    	Graphics2D g2D = (Graphics2D) g;
 	    	g2D.drawImage(bi, 0, 0, null);
-	    	}catch(RemoteException e){
+	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    		++errorCount;
 		    	if(errorCount > 5)
 		    		this.stop();
+		    	imagesOwners.set(index, null);
+		    	playersB[index].setEnabled(false);
 
 	    	}
 
@@ -136,8 +143,11 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    }catch(RemoteException e){
 	    	e.printStackTrace();
 	    	++errorCount;
+	    }catch(Exception e){
+	    	++errorCount;	    	
+	    } finally{
 	    	if(errorCount > 5)
-	    		this.stop();
+	    		this.stop();	    	
 	    }
 	    if(vb!=null){
 		    for(Point p:vb){
@@ -177,7 +187,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 
 	  public void run() {
 	    Thread me = Thread.currentThread();
-	    while (thread == me) {
+	    while (thread == me && errorCount<5) {
 	    	addImages();	
 	    	repaint();
 	    	try{
@@ -193,13 +203,21 @@ public class AnimationCanvas extends JLabel implements Runnable {
 			  if(imagesOwners.size()==0 && !this.game.isWaitForPlayers() ){
 				  players = game.getPlayers();
 				  planes = new HashMap<String, Piloting>();
-				  for(Map.Entry<String, Playing> el:players.entrySet()){
+				  int i = 0;
+				  for(Map.Entry<String, Playing> el:players.entrySet()){				
 					  imagesOwners.add(el.getKey());		
 					  planes.put(el.getKey(), el.getValue().getPlane());
+					  playersB[i].setText(el.getKey());
+					  playersB[i].setEnabled(true);
+					  scores[i].setText("0");
+					  scores[i].setEnabled(true);
+					  ++i;
 				  }
+				  
 			  }
 		  }catch(RemoteException e){
 			  e.printStackTrace();
+			  errorCount++;
 		  }
 	  }
 }

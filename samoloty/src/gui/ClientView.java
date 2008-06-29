@@ -159,6 +159,8 @@ public class ClientView extends javax.swing.JFrame {
 		scores[5]=jTextPlayer6;
 		scores[6]=jTextPlayer7;
 		scores[7]=jTextPlayer8;
+		aBoard.setScores(scores);
+		aBoard.setPlayersB(players);
 	}
 	
 	private void initGUI() {
@@ -179,7 +181,13 @@ public class ClientView extends javax.swing.JFrame {
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent evt) {
 					//System.out.println("this.windowClosing, event="+evt);
+					try{
+					gaming.removePlayer(myNick);
+					}catch(Exception e){
+						
+					}finally{
 					System.exit(0);
+					}
 				}
 			});
 			{
@@ -445,8 +453,7 @@ public class ClientView extends javax.swing.JFrame {
 			aBoard.setBackground( java.awt.Color.white);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			aBoard.setVisible(false);
-			aBoard.setScores(scores);
-			aBoard.setPlayersB(players);
+			
 		}
 		return aBoard;
 	}
@@ -741,6 +748,10 @@ public class ClientView extends javax.swing.JFrame {
 						aBoard.setGame(gaming);
 						aBoard.start();
 						addKeyListner();
+						toLog("Aby wystarowac gre - Enter");
+						toLog("Sterowanie wsda - strzal spacja");
+						toLog("Zatrzymanie sewera - q");
+						
 					}catch(RemoteException e){
 						toLog(e.getMessage());
 						e.printStackTrace();
@@ -760,7 +771,7 @@ public class ClientView extends javax.swing.JFrame {
 		return createServer;
 	}
 	private void toLog(String s){
-		jTextPane1.setText(jTextPane1.getText() + "\n"+s);
+		jTextPane1.setText(jTextPane1.getText() + "\n"+s);		
 		
 	}
 	private void addKeyListner(){
@@ -826,8 +837,12 @@ public class ClientView extends javax.swing.JFrame {
 							aBoard.setGame(gaming);
 							aBoard.start();
 							addKeyListner();
-						} else
-							toLog("Musisz wybrac inny nick!");
+							toLog("Poczkaj az gra wystaruje\nsterowanie wsda\nstrzal spacja");
+						} else {
+							toLog("Gra jest juz rozpoczeta");
+							aBoard.setGame(gaming);
+							aBoard.start();							
+						}
 					}catch(RemoteException e){
 						toLog(e.getMessage());
 						e.printStackTrace();
@@ -866,6 +881,9 @@ public class ClientView extends javax.swing.JFrame {
 						if( game != null){
 							game.stop();
 							game.unbindAll();
+						} else {
+							aBoard.stop();
+							gaming.removePlayer(myNick);
 						}
 					}catch(AccessException e){
 						e.printStackTrace();
