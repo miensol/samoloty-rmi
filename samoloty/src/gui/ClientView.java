@@ -724,7 +724,7 @@ public class ClientView extends javax.swing.JFrame {
 	private void addKeyListner(){
 		this.addKeyListener(
 				new KeyListener() {
-					@Override
+					//@Override
 					public void keyPressed(KeyEvent e) {
 						/*try{
 						gaming.sendEvent(myNick, e);
@@ -733,7 +733,7 @@ public class ClientView extends javax.swing.JFrame {
 							ex.printStackTrace();
 						}*/						
 					}
-					@Override
+					//@Override
 					public void keyReleased(KeyEvent e) {
 						// TODO Auto-generated method stub
 						/*
@@ -745,7 +745,7 @@ public class ClientView extends javax.swing.JFrame {
 							}
 							*/						
 					}
-					@Override
+					//@Override
 					public void keyTyped(KeyEvent e) {
 						// TODO Auto-generated method stub
 						try{
