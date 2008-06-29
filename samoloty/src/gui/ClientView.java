@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.beans.Visibility;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.AccessException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -706,6 +707,7 @@ public class ClientView extends javax.swing.JFrame {
 					try{
 						game = new PlaneGame(myNick);
 						gaming = game;
+						game.stop();
 						game.join(myNick);
 						toLog("Utworzylem serwer!");
 						aBoard.setGame(gaming);
@@ -715,7 +717,11 @@ public class ClientView extends javax.swing.JFrame {
 						toLog(e.getMessage());
 						e.printStackTrace();
 					}
-					
+					setJMenuBar(jMenuBar1);
+					{
+						disconnect.setEnabled(true);
+						connect.setEnabled(false);
+					}
 					jButtonPlayer1.setText(jConnectNick.getText());
 					aBoard.setVisible(true);
 					jPanelRight.setVisible(true);
@@ -828,7 +834,16 @@ public class ClientView extends javax.swing.JFrame {
 					
 					
 					//TODO disconnect from server
-					
+					try{
+						if( game != null){
+							game.stop();
+							game.unbindAll();
+						}
+					}catch(AccessException e){
+						e.printStackTrace();
+					}catch(RemoteException e){
+						e.printStackTrace();
+					}
 					aBoard.setVisible(false);
 					jPanelRight.setVisible(false);
 					setJMenuBar(jMenuBar1);

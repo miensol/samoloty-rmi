@@ -43,7 +43,7 @@ public class PlaneGame extends Game implements Gaming,
 	protected String url;
 	protected String name = "PlaneGame";
 	protected Thread actions;
-	private boolean stopped = true;
+	private volatile boolean  stopped = true;
 	protected boolean waitForPlayers = true;
 	public PlaneGame(String nick) throws RemoteException {
 
@@ -253,7 +253,7 @@ public class PlaneGame extends Game implements Gaming,
 			e.printStackTrace();
 		}
 		
-		
+		this.actions = null;
 	}
 	public synchronized Map<String,Playing> getPlayers() throws RemoteException{
 		return this.players;

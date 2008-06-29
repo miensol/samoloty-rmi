@@ -62,7 +62,7 @@ public class Game extends UnicastRemoteObject {
 		return LocateRegistry.getRegistry(Game.PORT);
 	}
 
-	protected void unbindAll() {
+	public void unbindAll() {
 		try{
 			for(String s:this.registry.list()){
 				System.out.print("Unbinding : " + s );
