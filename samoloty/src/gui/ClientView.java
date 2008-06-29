@@ -120,6 +120,7 @@ public class ClientView extends javax.swing.JFrame {
 	private PlaneGame game;
 	private Gaming gaming;
 	private String myNick ;
+	private JButton[] players;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -137,6 +138,8 @@ public class ClientView extends javax.swing.JFrame {
 	public ClientView() {
 		super();
 		initGUI();
+		players = new JButton[8];
+		// cala reszta
 	}
 	
 	private void initGUI() {
