@@ -243,7 +243,7 @@ public class PlaneGame extends Game implements Gaming,
 		try{
 			
 			do{
-				Thread.sleep(25);
+				Thread.sleep(30);
 				this.moveAll();
 			}while(!this.stopped);
 			
@@ -305,7 +305,7 @@ public class PlaneGame extends Game implements Gaming,
 				break;
 			case KeyEvent.VK_SPACE:
 				//System.out.println("Strzelil gracz "+nick);
-				if( ((new Date()).getTime() - plane.getLastShoot().getTime()) > 500 ){
+				if( ((new Date()).getTime() - plane.getLastShoot().getTime()) > 100 ){
 					BaseWeapon nb = new BaseWeapon(plane);
 					plane.setLastShoot(new Date());
 					this.bullets.add(nb);
