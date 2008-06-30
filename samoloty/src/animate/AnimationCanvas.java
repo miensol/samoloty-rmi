@@ -48,7 +48,8 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  int scaleDirection;
 	  public MediaTracker mt;
 	  public Gaming game;
-	  
+	  AffineTransform at;
+	  Graphics2D big;
 	  public AnimationCanvas() {
 	    setBackground(Color.blue);
 	    setSize(800, 600);
@@ -76,11 +77,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    width = image.getWidth(this)/2;
 	    height = image.getHeight(this)/2;
 	    rotate = (int) 0;
-	    scale = Math.random() * 1.5;
-	    scaleDirection = DOWN;
-
-	    xi = 50.0;
-	    yi = 50.0;
+	    at = new AffineTransform();
 
 	  }
 	  public void setGame(Gaming game){
@@ -102,21 +99,27 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	if(imagesOwners.get(index) == null)
 	    		continue;
 	    	String nick = imagesOwners.get(index);
-	    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
-	    	Graphics2D big = bi.createGraphics();
+	    	
 	    	//System.out.println("Rysuje gracza "+s);
 	    	
 	    	try{
+	    		
 	    		Piloting plane = planes.get(nick);
 	    		x = plane.getX();
 	    		y = plane.getY();
 	    		//rotate = plane.getAngle();
 	    		Integer score = players.get(nick).getScore();
 	    	scores[index].setText(score.toString());
-	    	AffineTransform at = new AffineTransform();
-	    //	at.setToIdentity();	  
 	    	
-	    	at.translate(x , y );
+	    	//g.translate((int)Math.round(x),(int)Math.round( y));
+	    	
+    		bi = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+    	
+    		big = bi.createGraphics();
+
+	    	at.setToIdentity();	  
+	    	
+	    	at.translate(26 , 30 );
 	    	at.rotate(plane.getAngle());
 	    	at.translate(-26, -30);
 	    //at.scale(scale, scale);
@@ -124,7 +127,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	big.drawImage(image, at, this);
 
 	    	Graphics2D g2D = (Graphics2D) g;
-	    	g2D.drawImage(bi, 0, 0, null);
+	    	g2D.drawImage(bi, (int)Math.round(x) - 26,(int)Math.round( y) -30 , null);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    		++errorCount;
@@ -151,20 +154,20 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    }
 	    if(vb!=null){
 		    for(Point p:vb){
-		    	bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+		    	bi = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 		    	Graphics2D big = bi.createGraphics();
 		    	//System.out.println("Rysuje gracza "+s);
 		    	//step(d.width, d.height);
 		    	x  = p.x;
 		    	y  = p.y;
-		    	AffineTransform at = new AffineTransform();
-	    	
-		    	at.translate(x , y );    	
-		   
+		    	
+		    	 at.setToIdentity();
+		    	//at.translate(x , y );    	
+		    	
 		    	big.drawImage(bullet, at, this);
 
 		    	Graphics2D g2D = (Graphics2D) g;
-		    	g2D.drawImage(bi, 0, 0, null);
+		    	g2D.drawImage(bi, (int)Math.round(x),(int) Math.round(y), null);
 		    	
 
 		    	big.dispose();
@@ -191,7 +194,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    	addImages();	
 	    	repaint();
 	    	try{
-	    		Thread.sleep(50);	    		
+	    		Thread.sleep(30);	    		
 	    	}catch(InterruptedException e){
 	    		e.printStackTrace();
 	    	}

@@ -22,7 +22,7 @@ public class BasePlane extends Movable<Short> implements Piloting {
 	/**
 	 * Maximal speed of a plane
 	 */
-	protected static short maxSpeed = 10;
+	protected static short maxSpeed = 6;
 
 	/**
 	 * Angle of a plane
