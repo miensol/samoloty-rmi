@@ -24,6 +24,8 @@ import common.Piloting;
 import common.Playing;
 
 public class AnimationCanvas extends JLabel implements Runnable {
+	  public final static int GameWidth = 800;
+	  public final static int GameHeight = 600;
 	  Thread thread;
 	  private JButton[] playersB;
 		private JTextField[] scores;
@@ -36,11 +38,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  public Map<String,Piloting> planes;
 	  double x, y, xi, yi;
 	  Dimension d;
-	  int rotate;
-
-	  double scale;
-
-	  int UP = 0;
+	  int rotate;	 
 	  int width = 10;
 	  int height = 10;
 	  int DOWN = 1;
@@ -52,7 +50,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	  Graphics2D big;
 	  public AnimationCanvas() {
 	    setBackground(Color.blue);
-	    setSize(800, 600);
+	    setSize(GameWidth, GameHeight);
 	    url = getClass().getResource("samolocik.gif");
 	    image = getToolkit().getImage(url);
 	    url = getClass().getResource("bullet.gif");
@@ -61,7 +59,7 @@ public class AnimationCanvas extends JLabel implements Runnable {
 	    mt = new MediaTracker(this);
 	    mt.addImage(image, 1);
 	    mt.addImage(bullet, 2);
-	    d  = new Dimension(800,600);
+	    d  = new Dimension(AnimationCanvas.GameWidth,AnimationCanvas.GameHeight);
 	    imagesOwners = new Vector<String>();
 
 	    try {

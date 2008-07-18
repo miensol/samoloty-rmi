@@ -27,7 +27,8 @@ import common.Player;
 import common.Playing;
 import java.lang.Math;
 
-import oldgui.GameBoard;
+import animate.AnimationCanvas;;
+
 /**
  * @author Piotr
  * 
@@ -207,8 +208,8 @@ public class PlaneGame extends Game implements Gaming,
 		for(int i=0;i<bullets.size();++i){
 			BaseWeapon b= bullets.get(i);
 			b.move();
-			if( b.getX()<0 || b.getX()>GameBoard.width 
-					|| b.getY()<0 || b.getY()>GameBoard.height )
+			if( b.getX()<0 || b.getX()>AnimationCanvas.GameWidth
+					|| b.getY()<0 || b.getY()>AnimationCanvas.GameHeight )
 				this.bullets.remove(i);			  
 		}
 		
@@ -224,8 +225,8 @@ public class PlaneGame extends Game implements Gaming,
 						&& b.distance(plane)<30){
 					Playing shooter = getPlayer(b.getShooterNick());
 					shooter.setScore(shooter.getScore() + 1);
-					plane.setX((short)(Math.round(Math.random()*800)));
-					plane.setY((short)((Math.round(Math.random()*600))));
+					plane.setX((short)(Math.round(Math.random()*AnimationCanvas.GameWidth)));
+					plane.setY((short)((Math.round(Math.random()*AnimationCanvas.GameHeight))));
 					plane.setAngle(0F);
 					plane.setSpeedY((short)0);
 					plane.setSpeedX((short)(BasePlane.getMaxSpeed()/2 +1));

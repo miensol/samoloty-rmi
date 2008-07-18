@@ -449,7 +449,7 @@ public class ClientView extends javax.swing.JFrame {
 	public AnimationCanvas getaBoard() {
 		if(aBoard == null) {
 			aBoard = new AnimationCanvas();
-			aBoard.setSize(800, 600);
+			aBoard.setSize(AnimationCanvas.GameWidth, AnimationCanvas.GameHeight);
 			aBoard.setBackground( java.awt.Color.white);
 			aBoard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			aBoard.setVisible(false);

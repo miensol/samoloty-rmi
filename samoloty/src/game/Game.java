@@ -27,7 +27,7 @@ public class Game extends UnicastRemoteObject {
 	 * Game owner's nick
 	 */
 	protected String nick;
-	public final static int PORT = 10002;
+	public final static int PORT = 37015;
 	public static String HOST = "//localhost";
 	public static String URL_BASE = Game.HOST + ":" + Game.PORT;
 

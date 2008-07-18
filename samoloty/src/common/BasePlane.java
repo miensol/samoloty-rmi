@@ -7,7 +7,7 @@ package common;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import oldgui.GameBoard;
+import animate.AnimationCanvas;
 
 import core.MapElement;
 import core.Movable;
@@ -73,10 +73,10 @@ public class BasePlane extends Movable<Short> implements Piloting {
 			this.x = 0;
 		if( this.y < 0 )
 			this.y = 0;
-		if( this.x > GameBoard.width )
-			this.x = GameBoard.width;
-		if ( this.y > GameBoard.height )
-			this.y = GameBoard.height;
+		if( this.x > AnimationCanvas.GameWidth)
+			this.x = AnimationCanvas.GameWidth;
+		if ( this.y > AnimationCanvas.GameHeight )
+			this.y = AnimationCanvas.GameHeight;
 	}
 
 	/**
