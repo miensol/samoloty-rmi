@@ -1,0 +1,1 @@
+Zadanie projektowe realizowane w ramach zajęć z Systemów Rozporoszonych
